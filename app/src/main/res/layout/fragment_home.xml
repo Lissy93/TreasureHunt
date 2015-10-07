@@ -1,26 +1,41 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
-    android:layout_height="match_parent" tools:context=".HomeFragment">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".HomeFragment"
+    android:orientation="vertical"
+    android:weightSum="1">
 
 
     <Button
-        android:layout_width="wrap_content"
+        android:layout_width="200dp"
         android:layout_height="wrap_content"
         android:id="@+id/btnViewMyHunts"
-        android:layout_gravity="center_horizontal|top"
-        android:text="@string/title_section1" />
+        android:text="@string/title_section2"
+        android:layout_gravity="center_horizontal"
+        style="@style/Button"
+        android:layout_weight="0.03"
+        android:layout_marginTop="25dp" />
 
     <Button
-        android:layout_width="wrap_content"
+        android:layout_width="200dp"
         android:layout_height="wrap_content"
         android:id="@+id/btnViewAllHunts"
-        android:layout_gravity="center_horizontal|center"
-        android:text="@string/title_section2" />
+        android:text="@string/title_section3"
+        android:layout_gravity="center_horizontal"
+        style="@style/Button"
+        android:layout_weight="0.03"
+        android:layout_marginTop="25dp"
+        />
 
     <Button
-        android:layout_width="wrap_content"
+        android:layout_width="200dp"
         android:layout_height="wrap_content"
         android:id="@+id/btnCreateHunt"
-        android:layout_gravity="center_horizontal|bottom"
-        android:text="@string/title_section3" />
-</FrameLayout>
+        android:text="@string/title_section4"
+        android:layout_gravity="center_horizontal"
+        style="@style/Button"
+        android:layout_weight="0.03"
+        android:layout_marginTop="25dp" />
+
+</LinearLayout>
