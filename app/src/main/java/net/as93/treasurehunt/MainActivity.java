@@ -5,21 +5,19 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.app.ActionBar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.content.Context;
-import android.os.Build;
 import android.os.Bundle;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.support.v4.widget.DrawerLayout;
-import android.widget.ArrayAdapter;
-import android.widget.TextView;
+
 
 public class MainActivity extends AppCompatActivity
         implements NavigationDrawerFragment.NavigationDrawerCallbacks {
+
+    public final static String TYPE_OF_HUNTS = "net.as93.treasurehunt.TYPE_OF_HUNTS";
 
     /**
      * Fragment managing the behaviors, interactions and presentation of the navigation drawer.
@@ -48,26 +46,43 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public void onNavigationDrawerItemSelected(int position) {
-        // update the main content by replacing fragments
         FragmentManager fragmentManager = getSupportFragmentManager();
-        fragmentManager.beginTransaction()
-                .replace(R.id.container, PlaceholderFragment.newInstance(position + 1))
-                .commit();
-    }
+        Fragment viewHunts = new ViewHuntsFragment();
 
-    public void onSectionAttached(int number) {
-        switch (number) {
-            case 1:
-                mTitle = getString(R.string.title_section1);
+        switch(position+1) {
+            case 1: // The HOme Screen
+                fragmentManager.beginTransaction()
+                        .replace(R.id.container, new HomeFragment())
+                        .commit();
                 break;
-            case 2:
-                mTitle = getString(R.string.title_section2);
+
+            case 2: // View My Hunts
+                fragmentManager.beginTransaction()
+                        .replace(R.id.container, viewHunts)
+                        .commit();
                 break;
-            case 3:
-                mTitle = getString(R.string.title_section3);
+
+            case 3: // View All Hunts
+                fragmentManager.beginTransaction()
+                        .replace(R.id.container, viewHunts)
+                        .commit();
+                break;
+
+            case 4: // Create New Hunt
+                fragmentManager.beginTransaction()
+                        .replace(R.id.container, new CreateHuntFragment())
+                        .commit();
+                break;
+
+            default:
+                fragmentManager.beginTransaction()
+                        .replace(R.id.container, new HomeFragment())
+                        .commit();
                 break;
         }
+
     }
+
 
     public void restoreActionBar() {
         ActionBar actionBar = getSupportActionBar();
@@ -100,34 +115,5 @@ public class MainActivity extends AppCompatActivity
     }
 
 
-    public static class PlaceholderFragment extends Fragment {
-
-        private static final String ARG_SECTION_NUMBER = "section_number";
-
-        public static PlaceholderFragment newInstance(int sectionNumber) {
-            PlaceholderFragment fragment = new PlaceholderFragment();
-            Bundle args = new Bundle();
-            args.putInt(ARG_SECTION_NUMBER, sectionNumber);
-            fragment.setArguments(args);
-            return fragment;
-        }
-
-        public PlaceholderFragment() {
-        }
-
-        @Override
-        public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                                 Bundle savedInstanceState) {
-            View rootView = inflater.inflate(R.layout.fragment_main, container, false);
-            return rootView;
-        }
-
-        @Override
-        public void onAttach(Activity activity) {
-            super.onAttach(activity);
-            ((MainActivity) activity).onSectionAttached(
-                    getArguments().getInt(ARG_SECTION_NUMBER));
-        }
-    }
 
 }

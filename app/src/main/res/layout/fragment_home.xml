@@ -1,0 +1,26 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent" tools:context=".HomeFragment">
+
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/btnViewMyHunts"
+        android:layout_gravity="center_horizontal|top"
+        android:text="@string/title_section1" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/btnViewAllHunts"
+        android:layout_gravity="center_horizontal|center"
+        android:text="@string/title_section2" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/btnCreateHunt"
+        android:layout_gravity="center_horizontal|bottom"
+        android:text="@string/title_section3" />
+</FrameLayout>
