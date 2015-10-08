@@ -12,6 +12,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.support.v4.widget.DrawerLayout;
+import android.widget.ListView;
 
 
 public class MainActivity extends AppCompatActivity
@@ -42,6 +43,7 @@ public class MainActivity extends AppCompatActivity
         mNavigationDrawerFragment.setUp(
                 R.id.navigation_drawer,
                 (DrawerLayout) findViewById(R.id.drawer_layout));
+        mNavigationDrawerFragment.setIcon();
     }
 
     @Override
@@ -50,6 +52,9 @@ public class MainActivity extends AppCompatActivity
         fragmentManager.beginTransaction()
                 .replace(R.id.container, new HomeFragment())
                 .commit();
+
+        mNavigationDrawerFragment.selectItem(0);
+
     }
 
     @Override

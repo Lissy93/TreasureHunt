@@ -152,7 +152,7 @@ public class NavigationDrawerFragment extends Fragment {
         mDrawerLayout.setDrawerListener(mDrawerToggle);
     }
 
-    private void selectItem(int position) {
+    public void selectItem(int position) {
         mCurrentSelectedPosition = position;
         if (mDrawerListView != null) {
             mDrawerListView.setItemChecked(position, true);
@@ -212,6 +212,11 @@ public class NavigationDrawerFragment extends Fragment {
         return super.onOptionsItemSelected(item);
     }
 
+
+    public void setIcon(){
+        ActionBar actionBar = getActionBar();
+        actionBar.setHomeAsUpIndicator(R.drawable.ic_drawer);
+    }
 
     private void showGlobalContextActionBar() {
         ActionBar actionBar = getActionBar();
