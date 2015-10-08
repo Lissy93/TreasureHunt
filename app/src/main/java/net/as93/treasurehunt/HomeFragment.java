@@ -4,9 +4,12 @@ import android.app.Activity;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.Toast;
 
 
 /**
@@ -60,10 +63,6 @@ public class HomeFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
     }
 
     @Override
@@ -72,7 +71,42 @@ public class HomeFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_home, container, false);
 
-        //Find the +1 button
+
+        Button myHuntsButton = (Button) view.findViewById(R.id.btnViewMyHunts);
+        myHuntsButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+                Fragment viewHunts = new ViewHuntsFragment();
+                fragmentManager.beginTransaction()
+                        .replace(R.id.container, viewHunts)
+                        .commit();
+            }
+        });
+
+        Button allHuntsButton = (Button) view.findViewById(R.id.btnViewAllHunts);
+        allHuntsButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+                Fragment viewHunts = new ViewHuntsFragment();
+                fragmentManager.beginTransaction()
+                        .replace(R.id.container, viewHunts)
+                        .commit();
+            }
+        });
+
+        Button createHuntButton = (Button) view.findViewById(R.id.btnCreateHunt);
+        createHuntButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+                Fragment createHunt = new CreateHuntFragment();
+                fragmentManager.beginTransaction()
+                        .replace(R.id.container, createHunt)
+                        .commit();
+            }
+        });
 
         return view;
     }
