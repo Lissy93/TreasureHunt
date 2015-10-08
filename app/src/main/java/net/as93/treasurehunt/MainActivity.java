@@ -60,7 +60,6 @@ public class MainActivity extends AppCompatActivity
     @Override
     public void onNavigationDrawerItemSelected(int position) {
         FragmentManager fragmentManager = getSupportFragmentManager();
-        Fragment viewHunts = new ViewHuntsFragment();
 
         switch(position+1) {
             case 1: // The HOme Screen
@@ -70,14 +69,26 @@ public class MainActivity extends AppCompatActivity
                 break;
 
             case 2: // View My Hunts
+                Fragment viewMyHunts = new ViewHuntsFragment();
+
+                Bundle argsMy = new Bundle();
+                argsMy.putChar(TYPE_OF_HUNTS, 'm');
+                viewMyHunts.setArguments(argsMy);
+
                 fragmentManager.beginTransaction()
-                        .replace(R.id.container, viewHunts)
+                        .replace(R.id.container, viewMyHunts)
                         .commit();
                 break;
 
             case 3: // View All Hunts
+                Fragment viewAllHunts = new ViewHuntsFragment();
+
+                Bundle argsAll = new Bundle();
+                argsAll.putChar(TYPE_OF_HUNTS, 'a');
+                viewAllHunts.setArguments(argsAll);
+
                 fragmentManager.beginTransaction()
-                        .replace(R.id.container, viewHunts)
+                        .replace(R.id.container, viewAllHunts)
                         .commit();
                 break;
 

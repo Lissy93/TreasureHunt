@@ -21,6 +21,10 @@ import android.widget.Toast;
  * create an instance of this fragment.
  */
 public class HomeFragment extends Fragment {
+
+    public final static String TYPE_OF_HUNTS = "net.as93.treasurehunt.TYPE_OF_HUNTS";
+
+
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -77,9 +81,14 @@ public class HomeFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-                Fragment viewHunts = new ViewHuntsFragment();
+                Fragment viewMyHunts = new ViewHuntsFragment();
+
+                Bundle argsAll = new Bundle();
+                argsAll.putChar(TYPE_OF_HUNTS, 'm');
+                viewMyHunts.setArguments(argsAll);
+
                 fragmentManager.beginTransaction()
-                        .replace(R.id.container, viewHunts)
+                        .replace(R.id.container, viewMyHunts)
                         .commit();
             }
         });
@@ -89,9 +98,12 @@ public class HomeFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-                Fragment viewHunts = new ViewHuntsFragment();
+                Fragment viewAllHunts = new ViewHuntsFragment();
+                Bundle argsAll = new Bundle();
+                argsAll.putChar(TYPE_OF_HUNTS, 'a');
+                viewAllHunts.setArguments(argsAll);
                 fragmentManager.beginTransaction()
-                        .replace(R.id.container, viewHunts)
+                        .replace(R.id.container, viewAllHunts)
                         .commit();
             }
         });
