@@ -4,7 +4,9 @@
     android:layout_height="match_parent"
     tools:context=".HomeFragment"
     android:orientation="vertical"
-    android:weightSum="1">
+    android:weightSum="1"
+    android:background = "@drawable/treasuremap"
+    android:paddingTop="50dp">
 
 
     <Button
@@ -15,7 +17,8 @@
         android:layout_gravity="center_horizontal"
         style="@style/Button"
         android:layout_weight="0.03"
-        android:layout_marginTop="25dp" />
+        android:layout_marginTop="25dp"
+        android:textSize="25sp" />
 
     <Button
         android:layout_width="200dp"
@@ -26,7 +29,7 @@
         style="@style/Button"
         android:layout_weight="0.03"
         android:layout_marginTop="25dp"
-        />
+        android:textSize="25sp" />
 
     <Button
         android:layout_width="200dp"
@@ -36,6 +39,7 @@
         android:layout_gravity="center_horizontal"
         style="@style/Button"
         android:layout_weight="0.03"
-        android:layout_marginTop="25dp" />
+        android:layout_marginTop="25dp"
+        android:textSize="25sp" />
 
 </LinearLayout>
