@@ -1,22 +1,110 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
-android:layout_height="match_parent" tools:context=".HomeFragment">
+<ScrollView
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context="net.as93.homesafe.CreateSchedule"
+        tools:ignore="MergeRootFrame"
+        android:padding="@dimen/zero">
 
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="Create Hunt"
-        android:id="@+id/textView2"
-        android:layout_gravity="center" />
-
-    <CheckBox
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="New CheckBox"
-        android:id="@+id/checkBox"
-        android:layout_gravity="center_horizontal|bottom" />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/SubtitleText"
+            android:text="Enter your name"
+            android:id="@+id/subTitle1"/>
 
 
-</FrameLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="280dp"
+            android:orientation="vertical"
+            android:background="@drawable/big_card"
+            android:padding="10dp"
+            android:layout_margin="5dp"
+            android:id="@+id/createScheduleSec1"
+            android:layout_below="@+id/subTitle1">
+
+            <net.as93.treasurehunt.autocomplete.AutocompletePlaces
+                android:id="@+id/placesAutocomplete"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="map hint"
+                android:inputType="textPostalAddress"
+                android:layout_marginBottom="10dp"
+                android:layout_marginTop="10dp" />
+
+            <fragment
+                class="com.google.android.gms.maps.SupportMapFragment"
+                android:layout_width="match_parent"
+                android:layout_height="180dp"
+                android:id="@+id/mapFragmentInner"
+                android:layout_margin="8dp"/>
+
+        </LinearLayout>
+
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/SubtitleText"
+            android:text="Enter other info"
+            android:layout_below="@+id/createScheduleSec1"
+            android:id="@+id/subTitle2"/>
+
+
+
+
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/SubtitleText"
+            android:text="moer text"
+            android:layout_below="@+id/createScheduleSec1"
+            android:id="@+id/subTitle3"/>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="280dp"
+            android:orientation="vertical"
+            android:background="@drawable/big_card"
+            android:padding="10dp"
+            android:layout_margin="5dp"
+            android:id="@+id/createScheduleSec3"
+            android:layout_below="@+id/subTitle3">
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:orientation="vertical"
+            android:id="@+id/createScheduleSec4"
+            android:layout_below="@+id/createScheduleSec3">
+
+        </LinearLayout>
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/btnNext"
+            android:text="Create"
+            android:layout_alignParentBottom="true"
+            android:background="@drawable/rectangle_button_selector"
+            android:textColor="@color/colorWhite"
+            android:tint="@android:color/white"
+            android:textSize="@dimen/abc_text_size_large_material"
+            android:elevation="4dp"
+
+            />
+
+    </RelativeLayout>
+</ScrollView>
