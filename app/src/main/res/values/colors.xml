@@ -33,8 +33,8 @@
 
     <color name="colorPrimary">#00BCD4</color>
     <color name="colorPrimaryDark">#006064</color>
-    <color name="colorAccent">#ffef4074</color>
-    <color name="colorAccentLighter">#ffff81a3</color>
+    <color name="colorAccent">#ffbd23</color>
+    <color name="colorAccentLighter">#dbff8800</color>
 
 
 </resources>

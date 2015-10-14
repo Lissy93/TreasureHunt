@@ -13,5 +13,12 @@
 
     <string name="str_atv_places">AIzaSyCzZyu_3CqWZQf7yADLDhwnQkdxrMVcEnE</string>
     <string name="title_activity_maps">Map</string>
+    <string name="btnCreateSchedule">Create</string>
+    <string name="tvChooseName">Pick a name for your hunt</string>
+    <string name="tvYourName">Enter Your Name</string>
+    <string name="tvHuntDetails">Treasure Hunt Details</string>
+    <string name="hintStartTypingPlace">Start typing place name</string>
+    <string name="tStartLocation">Enter start location</string>
+    <string name="tvFinishLocation">Enter finish location</string>
 
 </resources>

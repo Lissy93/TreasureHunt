@@ -6,7 +6,7 @@
         xmlns:tools="http://schemas.android.com/tools"
         android:id="@+id/container"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         tools:context="net.as93.homesafe.CreateSchedule"
         tools:ignore="MergeRootFrame"
         android:padding="@dimen/zero">
@@ -16,8 +16,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             style="@style/SubtitleText"
-            android:text="Enter your name"
-            android:id="@+id/subTitle1"/>
+            android:text="@string/tStartLocation"
+            android:id="@+id/subTitle1" />
 
 
         <LinearLayout
@@ -31,10 +31,10 @@
             android:layout_below="@+id/subTitle1">
 
             <net.as93.treasurehunt.autocomplete.AutocompletePlaces
-                android:id="@+id/placesAutocomplete"
+                android:id="@+id/placesAutocompleteStart"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="map hint"
+                android:hint="@string/hintStartTypingPlace"
                 android:inputType="textPostalAddress"
                 android:layout_marginBottom="10dp"
                 android:layout_marginTop="10dp" />
@@ -43,31 +43,59 @@
                 class="com.google.android.gms.maps.SupportMapFragment"
                 android:layout_width="match_parent"
                 android:layout_height="180dp"
-                android:id="@+id/mapFragmentInner"
+                android:id="@+id/mapFragmentInnerStart"
                 android:layout_margin="8dp"/>
 
         </LinearLayout>
 
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            style="@style/SubtitleText"
-            android:text="Enter other info"
-            android:layout_below="@+id/createScheduleSec1"
-            android:id="@+id/subTitle2"/>
-
-
-
-
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             style="@style/SubtitleText"
-            android:text="moer text"
-            android:layout_below="@+id/createScheduleSec1"
-            android:id="@+id/subTitle3"/>
+            android:text="@string/tvFinishLocation"
+            android:id="@+id/subTitle2"
+            android:layout_below="@+id/createScheduleSec1"/>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="280dp"
+            android:orientation="vertical"
+            android:background="@drawable/big_card"
+            android:padding="10dp"
+            android:layout_margin="5dp"
+            android:id="@+id/createScheduleSec2"
+            android:layout_below="@+id/subTitle2">
+
+            <net.as93.treasurehunt.autocomplete.AutocompletePlaces
+                android:id="@+id/placesAutocompleteFinish"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/hintStartTypingPlace"
+                android:inputType="textPostalAddress"
+                android:layout_marginBottom="10dp"
+                android:layout_marginTop="10dp" />
+
+            <fragment
+                class="com.google.android.gms.maps.SupportMapFragment"
+                android:layout_width="match_parent"
+                android:layout_height="180dp"
+                android:id="@+id/mapFragmentInnerFinish"
+                android:layout_margin="8dp"/>
+
+        </LinearLayout>
+
+
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/SubtitleText"
+            android:text="@string/tvHuntDetails"
+            android:id="@+id/subTitle3"
+            android:layout_below="@+id/createScheduleSec2"/>
 
 
         <LinearLayout
@@ -80,23 +108,47 @@
             android:id="@+id/createScheduleSec3"
             android:layout_below="@+id/subTitle3">
 
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                style="@style/SubtitleText"
+                android:text="@string/tvYourName"
+                android:id="@+id/lblUsersName"/>
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textPersonName"
+                android:ems="10"
+                android:id="@+id/usersName" />
+
+            <Space
+                android:layout_width="1dp"
+                android:layout_height="30dp"/>
+
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                style="@style/SubtitleText"
+                android:text="@string/tvChooseName"
+                android:id="@+id/lblHuntName"/>
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textPersonName"
+                android:ems="10"
+                android:id="@+id/huntName" />
+
         </LinearLayout>
 
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="60dp"
-            android:orientation="vertical"
-            android:id="@+id/createScheduleSec4"
-            android:layout_below="@+id/createScheduleSec3">
-
-        </LinearLayout>
 
         <Button
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/btnNext"
-            android:text="Create"
+            android:text="@string/btnCreateSchedule"
             android:layout_alignParentBottom="true"
             android:background="@drawable/rectangle_button_selector"
             android:textColor="@color/colorWhite"

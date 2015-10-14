@@ -1,6 +1,7 @@
 package net.as93.treasurehunt;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -12,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.Adapter;
 import android.widget.AdapterView;
 import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
@@ -49,6 +51,10 @@ import java.util.List;
 
 public class CreateHuntFragment extends Fragment implements GoogleApiClient.OnConnectionFailedListener {
 
+    GoogleMap mapStart;
+    GoogleMap mapFinish;
+
+
     public CreateHuntFragment() {
         // Required empty public constructor
     }
@@ -63,18 +69,11 @@ public class CreateHuntFragment extends Fragment implements GoogleApiClient.OnCo
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
+
         super.onViewCreated(view, savedInstanceState);
 
         final CreateHuntFragment act = this;
-
-        /* Google maps and places */
-        mGoogleApiClient = new GoogleApiClient.Builder(getActivity())
-                .addApi(Places.GEO_DATA_API)
-                .enableAutoManage(getActivity(), GOOGLE_API_CLIENT_ID, this)
-                .build();
-        atvPlaces = (AutoCompleteTextView) getActivity().findViewById(R.id.placesAutocomplete);
-        atvPlaces.setThreshold(1);
-        atvPlaces.addTextChangedListener(new TextWatcher() {
+        TextWatcher tw = new TextWatcher() {
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 placesTask = new PlacesTask(act);
@@ -90,7 +89,27 @@ public class CreateHuntFragment extends Fragment implements GoogleApiClient.OnCo
             public void afterTextChanged(Editable s) {
                 // TODO Auto-generated method stub
             }
-        });
+        };
+
+        mapStart = ((SupportMapFragment) getChildFragmentManager()
+                .findFragmentById(R.id.mapFragmentInnerStart)).getMap();
+
+        mapFinish = ((SupportMapFragment) getChildFragmentManager()
+                .findFragmentById(R.id.mapFragmentInnerFinish)).getMap();
+
+        /* Google maps and places */
+        mGoogleApiClient = new GoogleApiClient.Builder(getActivity())
+                .addApi(Places.GEO_DATA_API)
+                .enableAutoManage(getActivity(), GOOGLE_API_CLIENT_ID, this)
+                .build();
+
+        startPlaces = (AutoCompleteTextView) getActivity().findViewById(R.id.placesAutocompleteStart);
+        startPlaces.setThreshold(1);
+        startPlaces.addTextChangedListener(tw);
+
+        endPlaces = (AutoCompleteTextView) getActivity().findViewById(R.id.placesAutocompleteFinish);
+        endPlaces.setThreshold(1);
+        endPlaces.addTextChangedListener(tw);
 
     }
 
@@ -104,7 +123,8 @@ public class CreateHuntFragment extends Fragment implements GoogleApiClient.OnCo
     }
 
 
-    AutoCompleteTextView atvPlaces;
+    AutoCompleteTextView startPlaces;
+    AutoCompleteTextView endPlaces;
     PlacesTask placesTask;
     ParserTask parserTask;
     GoogleApiClient mGoogleApiClient;
@@ -140,7 +160,7 @@ public class CreateHuntFragment extends Fragment implements GoogleApiClient.OnCo
     }
 
 
-    public void updateMap(final String placeId){
+    public void updateMap(final String placeId, final GoogleMap map){
         Log.i(TAG, " starting place lookup");
         Places.GeoDataApi.getPlaceById(mGoogleApiClient, placeId)
                 .setResultCallback(new ResultCallback<PlaceBuffer>() {
@@ -156,8 +176,6 @@ public class CreateHuntFragment extends Fragment implements GoogleApiClient.OnCo
                             LatLng latlng = myPlace.getLatLng();
 
                             // Select the map then clear it of previous markers
-                            GoogleMap map = ((SupportMapFragment) getChildFragmentManager()
-                                    .findFragmentById(R.id.mapFragmentInner)).getMap();
                             map.clear();
 
                             // Add new marker for the selected place
@@ -171,7 +189,7 @@ public class CreateHuntFragment extends Fragment implements GoogleApiClient.OnCo
                             map.moveCamera(cameraUpdate);
 
                             // Hide the soft keyboard
-                            EditText myEditText = (EditText) getActivity().findViewById(R.id.placesAutocomplete);
+                            EditText myEditText = (EditText) getActivity().findViewById(R.id.placesAutocompleteStart);
                             InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(
                                     Context.INPUT_METHOD_SERVICE);
                             imm.hideSoftInputFromWindow(myEditText.getWindowToken(), 0);
@@ -254,29 +272,40 @@ public class CreateHuntFragment extends Fragment implements GoogleApiClient.OnCo
             String[] from = new String[] { "description"};
             int[] to = new int[] { android.R.id.text1 };
             SimpleAdapter adapter = new SimpleAdapter(getActivity().getBaseContext(), result, android.R.layout.simple_list_item_1, from, to);
-            atvPlaces.setAdapter(adapter);
-
-            atvPlaces.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-
+            
+            startPlaces.setAdapter(adapter);
+            startPlaces.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
-
-                    // Find place id
-                    String placeId = "";
-                    HashMap mMap = (HashMap)arg0.getAdapter().getItem(arg2);
-                    for (Object o : mMap.keySet()) {
-                        String key = (String) o;
-                        String value = (String) mMap.get(key);
-                        if(key.equals("_id")){
-                            placeId = value;
-                        }
-                    }
-                    mActivity.updateMap(placeId); // Call update map, and pass place id
+                    String placeId = getPlaceID(arg0,arg1, arg2, arg3);
+                    mActivity.updateMap(placeId, mapStart); // Call update map, and pass place id
                 }
             });
+            endPlaces.setAdapter(adapter);
+            endPlaces.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
+                    String placeId = getPlaceID(arg0,arg1, arg2, arg3);
+                    mActivity.updateMap(placeId, mapFinish); // Call update map, and pass place id
+                }
+            });
+
         }
     }
 
+    private String getPlaceID(AdapterView<?> arg0, View arg1, int arg2, long arg3){
+        // Find place id
+        String placeId = "";
+        HashMap mMap = (HashMap) arg0.getAdapter().getItem(arg2);
+        for (Object o : mMap.keySet()) {
+            String key = (String) o;
+            String value = (String) mMap.get(key);
+            if (key.equals("_id")) {
+                placeId = value;
+            }
+        }
+        return placeId;
+    }
 
     @Override
     public void onConnectionFailed(ConnectionResult connectionResult) {
