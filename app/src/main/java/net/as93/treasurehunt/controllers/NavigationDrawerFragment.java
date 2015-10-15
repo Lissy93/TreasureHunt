@@ -1,4 +1,4 @@
-package net.as93.treasurehunt;
+package net.as93.treasurehunt.controllers;
 
 import android.support.v7.app.AppCompatActivity;
 import android.app.Activity;
@@ -21,6 +21,8 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
+
+import net.as93.treasurehunt.R;
 
 public class NavigationDrawerFragment extends Fragment {
 

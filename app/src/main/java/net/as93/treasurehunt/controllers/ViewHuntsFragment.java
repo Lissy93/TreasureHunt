@@ -1,4 +1,4 @@
-package net.as93.treasurehunt;
+package net.as93.treasurehunt.controllers;
 
 import android.content.Intent;
 import android.net.Uri;
@@ -13,6 +13,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import net.as93.treasurehunt.R;
 import net.as93.treasurehunt.models.Item;
 
 import org.xmlpull.v1.XmlPullParser;
