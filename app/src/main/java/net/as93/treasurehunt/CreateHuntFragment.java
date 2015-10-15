@@ -16,6 +16,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.Adapter;
 import android.widget.AdapterView;
 import android.widget.AutoCompleteTextView;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.SimpleAdapter;
 import android.widget.Toast;
@@ -110,6 +111,27 @@ public class CreateHuntFragment extends Fragment implements GoogleApiClient.OnCo
         endPlaces = (AutoCompleteTextView) getActivity().findViewById(R.id.placesAutocompleteFinish);
         endPlaces.setThreshold(1);
         endPlaces.addTextChangedListener(tw);
+
+
+
+
+        // Send data
+
+        final Button button = (Button) getActivity().findViewById(R.id.btnNext);
+        final EditText txtHuntName = (EditText) getActivity().findViewById(R.id.huntName);
+        final EditText txtCreatorName = (EditText) getActivity().findViewById(R.id.usersName);
+        final EditText txtStartLocation = (EditText) getActivity().findViewById(R.id.placesAutocompleteStart);
+        final EditText txtFinishLocation = (EditText) getActivity().findViewById(R.id.placesAutocompleteFinish);
+
+        button.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                Toast.makeText(getActivity(), txtStartLocation.getText().toString(), Toast.LENGTH_SHORT).show();
+                // Get values from all 4 text fields
+                // Send request
+                // Toast a success
+                // Redirect
+            }
+        });
 
     }
 
@@ -272,7 +294,7 @@ public class CreateHuntFragment extends Fragment implements GoogleApiClient.OnCo
             String[] from = new String[] { "description"};
             int[] to = new int[] { android.R.id.text1 };
             SimpleAdapter adapter = new SimpleAdapter(getActivity().getBaseContext(), result, android.R.layout.simple_list_item_1, from, to);
-            
+
             startPlaces.setAdapter(adapter);
             startPlaces.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
