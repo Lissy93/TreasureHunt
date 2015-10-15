@@ -30,7 +30,7 @@
             android:id="@+id/createScheduleSec1"
             android:layout_below="@+id/subTitle1">
 
-            <net.as93.treasurehunt.autocomplete.AutocompletePlaces
+            <net.as93.treasurehunt.utils.autocomplete.AutocompletePlaces
                 android:id="@+id/placesAutocompleteStart"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -69,7 +69,7 @@
             android:id="@+id/createScheduleSec2"
             android:layout_below="@+id/subTitle2">
 
-            <net.as93.treasurehunt.autocomplete.AutocompletePlaces
+            <net.as93.treasurehunt.utils.autocomplete.AutocompletePlaces
                 android:id="@+id/placesAutocompleteFinish"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

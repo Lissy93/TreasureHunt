@@ -34,7 +34,7 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 import net.as93.treasurehunt.R;
-import net.as93.treasurehunt.autocomplete.PlaceJsonParser;
+import net.as93.treasurehunt.utils.autocomplete.PlaceJsonParser;
 
 import org.json.JSONObject;
 
