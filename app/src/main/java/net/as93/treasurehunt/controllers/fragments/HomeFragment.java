@@ -1,4 +1,4 @@
-package net.as93.treasurehunt.controllers;
+package net.as93.treasurehunt.controllers.fragments;
 
 import android.net.Uri;
 import android.os.Bundle;

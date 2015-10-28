@@ -1,4 +1,4 @@
-package net.as93.treasurehunt.controllers;
+package net.as93.treasurehunt.controllers.fragments;
 
 import android.content.Intent;
 import android.net.Uri;
@@ -14,6 +14,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import net.as93.treasurehunt.R;
+import net.as93.treasurehunt.controllers.ViewHunt;
 import net.as93.treasurehunt.models.Item;
 
 import org.xmlpull.v1.XmlPullParser;
@@ -72,7 +73,12 @@ public class ViewHuntsFragment extends Fragment {
         itemsLst.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                launchBrowser(position);
+//                launchBrowser(position);
+
+                Intent intent = new Intent(getActivity(), ViewHunt.class);
+                // get some data here yes
+//                intent.putExtra(EXTRA_MESSAGE, message);
+                startActivity(intent);
             }
         });
 

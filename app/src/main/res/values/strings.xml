@@ -20,5 +20,8 @@
     <string name="hintStartTypingPlace">Start typing place name</string>
     <string name="tStartLocation">Enter start location</string>
     <string name="tvFinishLocation">Enter finish location</string>
+    <string name="title_activity_view_hunt">ViewHunt</string>
+
+    <string name="hello_world">Hello world!</string>
 
 </resources>

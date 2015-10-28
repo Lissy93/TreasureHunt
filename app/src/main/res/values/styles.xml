@@ -3,6 +3,7 @@
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
         <item name="android:activatedBackgroundIndicator">@drawable/drawer_list_selector</item>
+        <item name="android:textColor">@color/black</item>
     </style>
 
     <style name="Button">

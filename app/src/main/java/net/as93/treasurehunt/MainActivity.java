@@ -9,10 +9,10 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.support.v4.widget.DrawerLayout;
 
-import net.as93.treasurehunt.controllers.CreateHuntFragment;
-import net.as93.treasurehunt.controllers.HomeFragment;
-import net.as93.treasurehunt.controllers.NavigationDrawerFragment;
-import net.as93.treasurehunt.controllers.ViewHuntsFragment;
+import net.as93.treasurehunt.controllers.fragments.CreateHuntFragment;
+import net.as93.treasurehunt.controllers.fragments.HomeFragment;
+import net.as93.treasurehunt.controllers.fragments.NavigationDrawerFragment;
+import net.as93.treasurehunt.controllers.fragments.ViewHuntsFragment;
 
 
 public class MainActivity extends AppCompatActivity

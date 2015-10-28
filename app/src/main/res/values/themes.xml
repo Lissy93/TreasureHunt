@@ -5,6 +5,7 @@
         parent="@style/Theme.AppCompat.Light.DarkActionBar">
         <item name="android:actionBarStyle">@style/MyActionBar</item>
         <item name="android:activatedBackgroundIndicator">@drawable/drawer_list_selector</item>
+        <item name="android:textColor">@color/black</item>
         <!-- Support library compatibility -->
         <item name="actionBarStyle">@style/MyActionBar</item>
     </style>

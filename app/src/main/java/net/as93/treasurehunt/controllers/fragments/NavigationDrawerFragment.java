@@ -1,4 +1,4 @@
-package net.as93.treasurehunt.controllers;
+package net.as93.treasurehunt.controllers.fragments;
 
 import android.support.v7.app.AppCompatActivity;
 import android.app.Activity;
