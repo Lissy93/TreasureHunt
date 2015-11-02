@@ -1,5 +1,9 @@
 package net.as93.treasurehunt;
 
+import android.app.Dialog;
+import android.support.v4.app.DialogFragment;
+
+//import android.app.DialogFragment;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.app.ActionBar;
 import android.support.v4.app.Fragment;
@@ -8,7 +12,11 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.support.v4.widget.DrawerLayout;
+import android.widget.Toast;
 
+import com.google.android.gms.common.api.GoogleApiClient;
+
+import net.as93.treasurehunt.controllers.dialogs.SetUsernameDialog;
 import net.as93.treasurehunt.controllers.fragments.CreateHuntFragment;
 import net.as93.treasurehunt.controllers.fragments.HomeFragment;
 import net.as93.treasurehunt.controllers.fragments.NavigationDrawerFragment;
@@ -19,6 +27,7 @@ public class MainActivity extends AppCompatActivity
         implements NavigationDrawerFragment.NavigationDrawerCallbacks {
 
     public final static String TYPE_OF_HUNTS = "net.as93.treasurehunt.TYPE_OF_HUNTS";
+
 
     /**
      * Fragment managing the behaviors, interactions and presentation of the navigation drawer.
@@ -133,11 +142,16 @@ public class MainActivity extends AppCompatActivity
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         if (id == R.id.action_settings) {
-            return true; // TODO handle settings menu here
+
+            DialogFragment setUsernameDialog = SetUsernameDialog.newInstance(
+                    MainActivity.this, "Alicia");
+            setUsernameDialog.show(getSupportFragmentManager(), "");
+
+            return true;
+
         }
         return super.onOptionsItemSelected(item);
     }
-
 
 
 }

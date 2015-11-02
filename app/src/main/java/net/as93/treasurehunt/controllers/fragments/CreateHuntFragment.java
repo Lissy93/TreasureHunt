@@ -53,6 +53,8 @@ public class CreateHuntFragment extends Fragment implements GoogleApiClient.OnCo
 
     GoogleMap mapStart;
     GoogleMap mapFinish;
+    GoogleApiClient mGoogleApiClient;
+
 
 
     public CreateHuntFragment() {
@@ -71,6 +73,7 @@ public class CreateHuntFragment extends Fragment implements GoogleApiClient.OnCo
     public void onViewCreated(View view, Bundle savedInstanceState) {
 
         super.onViewCreated(view, savedInstanceState);
+
 
         final CreateHuntFragment act = this;
         TextWatcher tw = new TextWatcher() {
@@ -134,9 +137,13 @@ public class CreateHuntFragment extends Fragment implements GoogleApiClient.OnCo
 
     }
 
+
     @Override
-    public void onDetach() {
-        super.onDetach();
+    public void onStop() {
+        if (mGoogleApiClient != null && mGoogleApiClient.isConnected()) {
+            mGoogleApiClient.disconnect();
+        }
+        super.onStop();
     }
 
     public interface OnFragmentInteractionListener {
@@ -144,11 +151,11 @@ public class CreateHuntFragment extends Fragment implements GoogleApiClient.OnCo
     }
 
 
+
     AutoCompleteTextView startPlaces;
     AutoCompleteTextView endPlaces;
     PlacesTask placesTask;
     ParserTask parserTask;
-    GoogleApiClient mGoogleApiClient;
     private static final int GOOGLE_API_CLIENT_ID = R.string.str_atv_places;
 
     public String TAG = "debug duck says: ";
