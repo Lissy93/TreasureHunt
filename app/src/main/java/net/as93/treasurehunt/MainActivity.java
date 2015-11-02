@@ -144,7 +144,7 @@ public class MainActivity extends AppCompatActivity
         if (id == R.id.action_settings) {
 
             DialogFragment setUsernameDialog = SetUsernameDialog.newInstance(
-                    MainActivity.this, "Alicia");
+                    MainActivity.this, "");
             setUsernameDialog.show(getSupportFragmentManager(), "");
 
             return true;

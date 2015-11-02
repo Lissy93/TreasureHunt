@@ -5,9 +5,19 @@
     tools:context=".HomeFragment"
     android:orientation="vertical"
     android:weightSum="1"
-    android:background = "@drawable/treasuremap"
-    android:paddingTop="50dp">
+    android:background = "@color/white"
+    android:paddingTop="50dp"
+    android:id="@+id/homeLayout">
 
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Tap to sign in"
+        android:id="@+id/lblSignedInAs"
+        android:layout_gravity="center_horizontal"
+        android:layout_weight="0.17"
+        android:textSize="@dimen/abc_text_size_headline_material" />
 
     <Button
         android:layout_width="200dp"

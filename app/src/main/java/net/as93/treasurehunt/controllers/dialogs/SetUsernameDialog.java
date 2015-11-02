@@ -1,7 +1,6 @@
 package net.as93.treasurehunt.controllers.dialogs;
 
 import android.app.Dialog;
-import android.content.SharedPreferences;
 import android.support.v4.app.DialogFragment;import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -13,13 +12,14 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import net.as93.treasurehunt.R;
+import net.as93.treasurehunt.controllers.fragments.HomeFragment;
 import net.as93.treasurehunt.models.Username;
 
 public class SetUsernameDialog extends DialogFragment {
 
     public static final String FORECAST_STRING = "FORECAST_STRING";
 
-    Username unObject;
+    Username username;
 
     public static SetUsernameDialog newInstance(Context context, String forecast) {
 
@@ -42,20 +42,19 @@ public class SetUsernameDialog extends DialogFragment {
         final EditText txtUsername = (EditText) view.findViewById(R.id.txtUsername);
 
 
-        unObject = new Username(getActivity());
-        forecastView.setText(unObject.fetchUsername());
+        username = new Username(getActivity());
+        forecastView.setText(username.fetchUsername());
 
 
         btnUpdate.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 // Check if username is valid and save is, success = true if username was saved.
-                Boolean success = unObject.updateUsername(txtUsername.getText().toString());
+                Boolean success = username.updateUsername(txtUsername.getText().toString());
 
                 if (success) {
                     showToast("Your username has been updated to " + txtUsername.getText());
                     getDialog().dismiss(); // Close the dialog
-                }
-                else{
+                } else {
                     showToast("This username is not valid, pick another");
                 }
 
