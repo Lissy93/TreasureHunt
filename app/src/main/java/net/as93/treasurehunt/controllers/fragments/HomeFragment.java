@@ -101,11 +101,10 @@ public class HomeFragment extends Fragment implements SharedPreferences.OnShared
         TextView lblSignedInAs = (TextView) view.findViewById(R.id.lblSignedInAs);
         if(getActivity()!= null) {
             username = new Username(getActivity());
-            String strUsername = username.fetchUsername();
-            if (strUsername.equals("Guest")) {
-                lblSignedInAs.setText("Not Signed in");
+            if (username.isUserRegistered()) {
+                lblSignedInAs.setText("Signed in as " + username.fetchUsername());
             } else {
-                lblSignedInAs.setText("Signed in as " + strUsername);
+                lblSignedInAs.setText("Not Signed in");
             }
         }
     }
