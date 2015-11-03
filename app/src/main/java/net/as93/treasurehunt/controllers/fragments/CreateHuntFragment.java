@@ -1,7 +1,6 @@
 package net.as93.treasurehunt.controllers.fragments;
 
 import android.content.Context;
-import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -55,18 +54,10 @@ public class CreateHuntFragment extends Fragment implements GoogleApiClient.OnCo
     GoogleMap mapFinish;
     GoogleApiClient mGoogleApiClient;
 
-
-
-    public CreateHuntFragment() {
-        // Required empty public constructor
-    }
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_create_hunt, container, false);
-
-        return view;
+        return inflater.inflate(R.layout.fragment_create_hunt, container, false);
     }
 
     @Override
@@ -74,8 +65,8 @@ public class CreateHuntFragment extends Fragment implements GoogleApiClient.OnCo
 
         super.onViewCreated(view, savedInstanceState);
 
-
         final CreateHuntFragment act = this;
+
         TextWatcher tw = new TextWatcher() {
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
@@ -85,12 +76,10 @@ public class CreateHuntFragment extends Fragment implements GoogleApiClient.OnCo
 
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-                // TODO Auto-generated method stub
             }
 
             @Override
             public void afterTextChanged(Editable s) {
-                // TODO Auto-generated method stub
             }
         };
 
@@ -105,24 +94,19 @@ public class CreateHuntFragment extends Fragment implements GoogleApiClient.OnCo
                 .addApi(Places.GEO_DATA_API)
                 .build();
 
-        startPlaces = (AutoCompleteTextView) getActivity().findViewById(R.id.placesAutocompleteStart);
-        startPlaces.setThreshold(1);
-        startPlaces.addTextChangedListener(tw);
+        txtStartLocation = (AutoCompleteTextView) getActivity().findViewById(R.id.placesAutocompleteStart);
+        txtStartLocation.setThreshold(1);
+        txtStartLocation.addTextChangedListener(tw);
 
         endPlaces = (AutoCompleteTextView) getActivity().findViewById(R.id.placesAutocompleteFinish);
         endPlaces.setThreshold(1);
         endPlaces.addTextChangedListener(tw);
 
 
-
-
-        // Send data
-
         final Button button = (Button) getActivity().findViewById(R.id.btnNext);
         final EditText txtHuntName = (EditText) getActivity().findViewById(R.id.huntName);
         final EditText txtCreatorName = (EditText) getActivity().findViewById(R.id.usersName);
-        final EditText txtStartLocation = (EditText) getActivity().findViewById(R.id.placesAutocompleteStart);
-        final EditText txtFinishLocation = (EditText) getActivity().findViewById(R.id.placesAutocompleteFinish);
+
 
         button.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
@@ -136,13 +120,12 @@ public class CreateHuntFragment extends Fragment implements GoogleApiClient.OnCo
 
     }
 
-    AutoCompleteTextView startPlaces;
+    AutoCompleteTextView txtStartLocation;
     AutoCompleteTextView endPlaces;
     PlacesTask placesTask;
     ParserTask parserTask;
-    private static final int GOOGLE_API_CLIENT_ID = R.string.str_atv_places;
 
-    public String TAG = "debug duck says: ";
+    public String TAG = "DEBUG DUCK: ";
 
     /** A method to download json data from url */
     private String downloadUrl(String strUrl) throws IOException{
@@ -155,8 +138,8 @@ public class CreateHuntFragment extends Fragment implements GoogleApiClient.OnCo
             urlConnection.connect();
             iStream = urlConnection.getInputStream();
             BufferedReader br = new BufferedReader(new InputStreamReader(iStream));
-            StringBuffer sb = new StringBuffer();
-            String line = "";
+            StringBuilder sb = new StringBuilder();
+            String line;
             while( ( line = br.readLine()) != null){
                 sb.append(line);
             }
@@ -165,6 +148,7 @@ public class CreateHuntFragment extends Fragment implements GoogleApiClient.OnCo
         }catch(Exception e){
             Log.d(TAG, "Exception while downloading url"+e.toString());
         }finally{
+            assert iStream != null;
             iStream.close();
             urlConnection.disconnect();
         }
@@ -285,11 +269,11 @@ public class CreateHuntFragment extends Fragment implements GoogleApiClient.OnCo
             int[] to = new int[] { android.R.id.text1 };
             SimpleAdapter adapter = new SimpleAdapter(getActivity().getBaseContext(), result, android.R.layout.simple_list_item_1, from, to);
 
-            startPlaces.setAdapter(adapter);
-            startPlaces.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            txtStartLocation.setAdapter(adapter);
+            txtStartLocation.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
-                    String placeId = getPlaceID(arg0,arg1, arg2, arg3);
+                    String placeId = getPlaceID(arg0, arg2);
                     mActivity.updateMap(placeId, mapStart); // Call update map, and pass place id
                 }
             });
@@ -297,7 +281,7 @@ public class CreateHuntFragment extends Fragment implements GoogleApiClient.OnCo
             endPlaces.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
-                    String placeId = getPlaceID(arg0,arg1, arg2, arg3);
+                    String placeId = getPlaceID(arg0, arg2);
                     mActivity.updateMap(placeId, mapFinish); // Call update map, and pass place id
                 }
             });
@@ -305,7 +289,7 @@ public class CreateHuntFragment extends Fragment implements GoogleApiClient.OnCo
         }
     }
 
-    private String getPlaceID(AdapterView<?> arg0, View arg1, int arg2, long arg3){
+    private String getPlaceID(AdapterView<?> arg0, int arg2){
         // Find place id
         String placeId = "";
         HashMap mMap = (HashMap) arg0.getAdapter().getItem(arg2);
