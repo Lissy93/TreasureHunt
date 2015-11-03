@@ -105,7 +105,6 @@ public class CreateHuntFragment extends Fragment implements GoogleApiClient.OnCo
 
         final Button button = (Button) getActivity().findViewById(R.id.btnNext);
         final EditText txtHuntName = (EditText) getActivity().findViewById(R.id.huntName);
-        final EditText txtCreatorName = (EditText) getActivity().findViewById(R.id.usersName);
 
 
         button.setOnClickListener(new View.OnClickListener() {

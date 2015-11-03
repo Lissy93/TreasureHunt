@@ -100,46 +100,27 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="280dp"
+            android:layout_height="170dp"
             android:orientation="vertical"
             android:background="@drawable/big_card"
             android:padding="10dp"
             android:layout_margin="5dp"
             android:id="@+id/createScheduleSec3"
-            android:layout_below="@+id/subTitle3">
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                style="@style/SubtitleText"
-                android:text="@string/tvYourName"
-                android:id="@+id/lblUsersName"/>
-
-            <EditText
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:inputType="textPersonName"
-                android:ems="10"
-                android:id="@+id/usersName" />
+            android:layout_below="@+id/subTitle3"
+            android:layout_marginBottom="25dp">
 
             <Space
                 android:layout_width="1dp"
                 android:layout_height="30dp"/>
 
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                style="@style/SubtitleText"
-                android:text="@string/tvChooseName"
-                android:id="@+id/lblHuntName"/>
-
             <EditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="textPersonName"
                 android:ems="10"
-                android:id="@+id/huntName" />
+                android:id="@+id/huntName"
+                android:hint="@string/huntNameHint" />
 
         </LinearLayout>
 
