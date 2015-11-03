@@ -21,13 +21,13 @@ import net.as93.treasurehunt.controllers.fragments.CreateHuntFragment;
 import net.as93.treasurehunt.controllers.fragments.HomeFragment;
 import net.as93.treasurehunt.controllers.fragments.NavigationDrawerFragment;
 import net.as93.treasurehunt.controllers.fragments.ViewHuntsFragment;
+import net.as93.treasurehunt.models.Username;
 
 
 public class MainActivity extends AppCompatActivity
         implements NavigationDrawerFragment.NavigationDrawerCallbacks {
 
     public final static String TYPE_OF_HUNTS = "net.as93.treasurehunt.TYPE_OF_HUNTS";
-
 
     /**
      * Fragment managing the behaviors, interactions and presentation of the navigation drawer.
@@ -69,6 +69,16 @@ public class MainActivity extends AppCompatActivity
     @Override
     public void onNavigationDrawerItemSelected(int position) {
         FragmentManager fragmentManager = getSupportFragmentManager();
+
+        Username username = new Username(this);
+
+        if(!username.isUserRegistered()){
+            position = 4; // 4 actually means 5
+            Toast.makeText(
+                    getApplicationContext(),
+                    "You must register a username before proceeding",
+                    Toast.LENGTH_LONG).show();
+        }
 
         switch(position+1) {
             case 1: // The HOme Screen
