@@ -1,6 +1,5 @@
 package net.as93.treasurehunt.controllers.fragments;
 
-import android.content.ContentValues;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -35,35 +34,31 @@ import com.google.android.gms.maps.model.MarkerOptions;
 
 import net.as93.treasurehunt.R;
 import net.as93.treasurehunt.models.Username;
+import net.as93.treasurehunt.utils.apiRequests.ControllerThatMakesARequest;
+import net.as93.treasurehunt.utils.apiRequests.ReqSaveHunt;
 import net.as93.treasurehunt.utils.autocomplete.PlaceJsonParser;
 
 import org.json.JSONObject;
 
-import java.io.BufferedInputStream;
-import java.io.BufferedOutputStream;
 import java.io.BufferedReader;
-import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.OutputStream;
 import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLEncoder;
-import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
-import javax.net.ssl.HttpsURLConnection;
-
-public class CreateHuntFragment extends Fragment implements GoogleApiClient.OnConnectionFailedListener {
+public class CreateHuntFragment extends Fragment
+        implements GoogleApiClient.OnConnectionFailedListener, ControllerThatMakesARequest {
 
     GoogleMap mapStart;
     GoogleMap mapFinish;
     GoogleApiClient mGoogleApiClient;
+
+    ControllerThatMakesARequest dis = this;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -129,7 +124,7 @@ public class CreateHuntFragment extends Fragment implements GoogleApiClient.OnCo
                             Toast.LENGTH_LONG).show();
                 }
                 else {
-                    PostTask rt = new PostTask(username, huntName);
+                    ReqSaveHunt rt = new ReqSaveHunt(username, huntName, dis);
                     rt.execute();
                 }
             }
@@ -212,6 +207,16 @@ public class CreateHuntFragment extends Fragment implements GoogleApiClient.OnCo
                     }
                 });
 
+    }
+
+    @Override
+    public void thereAreResults(String results) {
+        if(results.equals("200")){
+            huntWasSavedSccessfully();
+        }
+        else{
+            huntNameWasTaken();
+        }
     }
 
 
@@ -346,64 +351,6 @@ public class CreateHuntFragment extends Fragment implements GoogleApiClient.OnCo
         super.onStop();
     }
 
-    class PostTask extends AsyncTask<String, String, String>{
-
-        String huntName;
-        String username;
-
-        public PostTask(String strUsername, String strHuntName) {
-            this.huntName = strHuntName;
-            this.username = strHuntName;
-        }
-
-        String strUrl = "http://sots.brookes.ac.uk/~p0073862/services/hunt/createhunt/";
-
-        @Override
-        protected String doInBackground(String... uri) {
-            int responseCode = 0;
-
-            HttpURLConnection conn = null;
-
-            String urlParameters  = "username="+username+"&huntname="+huntName;
-            byte[] postData       = urlParameters.getBytes(StandardCharsets.UTF_8);
-            int    postDataLength = postData.length;
-
-            try {
-                URL url = new URL(strUrl);
-                conn= (HttpURLConnection) url.openConnection();
-                conn.setDoOutput(true);
-                conn.setInstanceFollowRedirects(false);
-                conn.setRequestMethod("POST");
-                conn.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
-                conn.setRequestProperty("charset", "utf-8");
-                conn.setRequestProperty("Content-Length", Integer.toString(postDataLength));
-                conn.setUseCaches(false);
-                DataOutputStream wr = new DataOutputStream( conn.getOutputStream());
-                wr.write( postData );
-
-                responseCode = conn.getResponseCode();
-
-            } catch (IOException e) {
-                e.printStackTrace();
-            } finally {
-                assert conn != null;
-                conn.disconnect();
-            }
-
-            return responseCode+"";
-        }
-
-        @Override
-        protected void onPostExecute(String result) {
-            super.onPostExecute(result);
-            if(result.equals("200")){
-                huntWasSavedSccessfully();
-            }
-            else{
-                huntNameWasTaken();
-            }
-        }
-    }
 
     private void huntNameWasTaken(){
         Toast.makeText(getActivity(), "A Hunt with that name already exists", Toast.LENGTH_SHORT).show();
