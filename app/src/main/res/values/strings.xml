@@ -5,6 +5,7 @@
     <string name="title_section2">My Hunts</string>
     <string name="title_section3">All Hunts</string>
     <string name="title_section4">Create Hunt</string>
+    <string name="title_section5">Update Username</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>

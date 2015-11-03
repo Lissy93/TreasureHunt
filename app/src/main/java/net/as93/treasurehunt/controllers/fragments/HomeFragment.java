@@ -99,13 +99,14 @@ public class HomeFragment extends Fragment implements SharedPreferences.OnShared
      */
     public void updateSignedInText(){
         TextView lblSignedInAs = (TextView) view.findViewById(R.id.lblSignedInAs);
-        username = new Username(getActivity());
-        String strUsername = username.fetchUsername();
-        if(strUsername.equals("Guest")){
-            lblSignedInAs.setText("Not Signed in");
-        }
-        else {
-            lblSignedInAs.setText("Signed in as " + strUsername);
+        if(getActivity()!= null) {
+            username = new Username(getActivity());
+            String strUsername = username.fetchUsername();
+            if (strUsername.equals("Guest")) {
+                lblSignedInAs.setText("Not Signed in");
+            } else {
+                lblSignedInAs.setText("Signed in as " + strUsername);
+            }
         }
     }
 

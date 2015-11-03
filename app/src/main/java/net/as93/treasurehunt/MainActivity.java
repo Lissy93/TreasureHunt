@@ -107,6 +107,12 @@ public class MainActivity extends AppCompatActivity
                         .commit();
                 break;
 
+            case 5: // Update Username
+                DialogFragment setUsernameDialog = SetUsernameDialog.newInstance(
+                        this, "");
+                setUsernameDialog.show(this.getSupportFragmentManager(), "");
+                break;
+
             default:
                 fragmentManager.beginTransaction()
                         .replace(R.id.container, new HomeFragment())
