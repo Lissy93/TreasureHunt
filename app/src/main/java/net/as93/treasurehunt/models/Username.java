@@ -51,6 +51,15 @@ public class Username extends Settings {
 
 
     /**
+     * Determines wheather of not the user is registered
+     * @return Boolean true if registered, false if not
+     */
+    public Boolean isUserRegistered(){
+        return !fetchUsername().equals(defaultUsername);
+    }
+
+
+    /**
      * Checks if the potential username meets the validation criteria
      * @param username String value of suggested new username
      * @return Boolean (true if valid, false if invalid)
