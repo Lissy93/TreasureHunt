@@ -15,7 +15,7 @@ import android.widget.TextView;
 
 import net.as93.treasurehunt.R;
 import net.as93.treasurehunt.controllers.ViewHunt;
-import net.as93.treasurehunt.models.Item;
+import net.as93.treasurehunt.models.Hunt;
 
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
@@ -32,8 +32,8 @@ public class ViewHuntsFragment extends Fragment {
 
     private TextView statusTxt;
     private ListView itemsLst;
-    private ArrayList<Item> items = new ArrayList<Item>();
-    private ArrayAdapter<Item> itemsAdapter;
+    private ArrayList<Hunt> hunts = new ArrayList<Hunt>();
+    private ArrayAdapter<Hunt> itemsAdapter;
 
 
     public ViewHuntsFragment() {
@@ -56,12 +56,12 @@ public class ViewHuntsFragment extends Fragment {
         }
 
         itemsLst = (ListView) view.findViewById(R.id.items_lst);
-        itemsAdapter = new ArrayAdapter<Item>(getActivity(), android.R.layout.simple_list_item_1, items);
+        itemsAdapter = new ArrayAdapter<Hunt>(getActivity(), android.R.layout.simple_list_item_1, hunts);
         itemsLst.setAdapter(itemsAdapter);
 
         ReaderTask readerTask = new ReaderTask();
         try {
-            URL url = new URL("http://feeds.feedburner.com/NhsChoicesBehindTheHeadlines?format=xml");
+            URL url = new URL("http://sots.brookes.ac.uk/~p0073862/services/hunt/hunts");
             readerTask.execute(url);
         }
         catch (MalformedURLException ex){
@@ -86,32 +86,22 @@ public class ViewHuntsFragment extends Fragment {
     }
 
 
-    private void launchBrowser(int position) {
-        Item item = items.get(position);
-        String link = item.getLink();
-        Uri uri = Uri.parse(link);
-        Intent launchBrowser = new Intent(Intent.ACTION_VIEW, uri);
-        startActivity(launchBrowser);
-    }
-
-
-
-    private class ReaderTask extends AsyncTask<URL, Void, ArrayList<Item>> {
+    private class ReaderTask extends AsyncTask<URL, Void, ArrayList<Hunt>> {
 
         private String statusMessage;
         private XmlPullParser parser;
 
         @Override
-        protected ArrayList<Item> doInBackground(URL... params) {
+        protected ArrayList<Hunt> doInBackground(URL... params) {
             statusMessage = "AsyncTask is working";
-            ArrayList<Item> result = new ArrayList<Item>();
+            ArrayList<Hunt> result = new ArrayList<Hunt>();
             try {
                 XmlPullParserFactory factory =
                         XmlPullParserFactory.newInstance();
                 parser = factory.newPullParser();
                 parser.setInput(params[0].openStream(), null);
                 while (!isEndDoc(parser)) {
-                    if (isStartTag(parser, "item")) {
+                    if (isStartTag(parser, "hunt")) {
                         result.add(getItem(parser));
                     }
                     parser.next();
@@ -128,10 +118,10 @@ public class ViewHuntsFragment extends Fragment {
 
 
         @Override
-        protected void onPostExecute(ArrayList<Item> result) {
+        protected void onPostExecute(ArrayList<Hunt> result) {
 //            statusTxt.setText(statusMessage);
-            items.clear();
-            items.addAll(result);
+            hunts.clear();
+            hunts.addAll(result);
             itemsAdapter.notifyDataSetChanged();
         }
 
@@ -141,20 +131,20 @@ public class ViewHuntsFragment extends Fragment {
                     && parser.getName().equalsIgnoreCase(name);
         }
 
-        private Item getItem(XmlPullParser parser)
+        private Hunt getItem(XmlPullParser parser)
                 throws XmlPullParserException, IOException {
-            String title = "???";
-            String link = null;
-            while (!isEndTag(parser, "item") && !isEndDoc(parser)) {
-                if (isStartTag(parser, "title")) {
-                    title = getTagText(parser, "title");
-                } else if (isStartTag(parser, "link")) {
-                    link = getTagText(parser, "link");
+            String huntName = "???";
+            String creator = null;
+            while (!isEndTag(parser, "hunt") && !isEndDoc(parser)) {
+                if (isStartTag(parser, "name")) {
+                    huntName = getTagText(parser, "name");
+                } else if (isStartTag(parser, "creator")) {
+                    creator = getTagText(parser, "creator");
                 }
                 parser.next();
             }
-            if (isEndTag(parser, "item")) {
-                return new Item(title, link);
+            if (isEndTag(parser, "hunt")) {
+                return new Hunt(huntName, creator);
             } else {
                 return null;
             }

@@ -3,18 +3,19 @@ package net.as93.treasurehunt.models;
 /**
  * Created by Alicia on 09/10/2015.
  */
-public class Item {
+public class Hunt {
     private String title;
-    private String link;
-    public Item(String title, String link) {
+    private String creator;
+    public Hunt(String title, String creator) {
         this.title = title;
-        this.link = link;
+        this.creator = creator;
     }
     public String getTitle(){
         return title;
     }
-    public String getLink() {
-        return link;
+
+    public String getCreator() {
+        return creator;
     }
     public String toString() {
         return title;
