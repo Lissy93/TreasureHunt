@@ -1,5 +1,6 @@
 package net.as93.treasurehunt.controllers.fragments;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
@@ -14,7 +15,7 @@ import net.as93.treasurehunt.R;
 import net.as93.treasurehunt.controllers.dialogs.SetUsernameDialog;
 import net.as93.treasurehunt.models.Username;
 
-public class HomeFragment extends Fragment {
+public class HomeFragment extends Fragment implements SharedPreferences.OnSharedPreferenceChangeListener {
 
     public final static String TYPE_OF_HUNTS = "net.as93.treasurehunt.TYPE_OF_HUNTS";
     Username username;
@@ -86,12 +87,10 @@ public class HomeFragment extends Fragment {
             }
         });
 
+        username.getPrefsObject().registerOnSharedPreferenceChangeListener(this);
+
         return view;
     }
-
-//    public void onDismiss(final DialogFragment dialog) {
-//       updateSignedInText();
-//    }
 
 
     /**
@@ -108,6 +107,12 @@ public class HomeFragment extends Fragment {
         else {
             lblSignedInAs.setText("Signed in as " + strUsername);
         }
+    }
+
+
+    public void onSharedPreferenceChanged(SharedPreferences arg0, String arg1)
+    {
+        updateSignedInText();
     }
 
 }

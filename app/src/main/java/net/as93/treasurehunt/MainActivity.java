@@ -146,12 +146,9 @@ public class MainActivity extends AppCompatActivity
             DialogFragment setUsernameDialog = SetUsernameDialog.newInstance(
                     MainActivity.this, "");
             setUsernameDialog.show(getSupportFragmentManager(), "");
-
             return true;
-
         }
         return super.onOptionsItemSelected(item);
     }
-
 
 }

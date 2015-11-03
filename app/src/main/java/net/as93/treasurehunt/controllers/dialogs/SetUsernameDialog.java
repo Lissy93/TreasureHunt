@@ -11,6 +11,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import net.as93.treasurehunt.MainActivity;
 import net.as93.treasurehunt.R;
 import net.as93.treasurehunt.controllers.fragments.HomeFragment;
 import net.as93.treasurehunt.models.Username;
