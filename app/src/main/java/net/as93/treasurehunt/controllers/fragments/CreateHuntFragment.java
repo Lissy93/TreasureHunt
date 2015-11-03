@@ -103,7 +103,6 @@ public class CreateHuntFragment extends Fragment implements GoogleApiClient.OnCo
         /* Google maps and places */
         mGoogleApiClient = new GoogleApiClient.Builder(getActivity())
                 .addApi(Places.GEO_DATA_API)
-                .enableAutoManage(getActivity(), GOOGLE_API_CLIENT_ID, this)
                 .build();
 
         startPlaces = (AutoCompleteTextView) getActivity().findViewById(R.id.placesAutocompleteStart);
@@ -136,21 +135,6 @@ public class CreateHuntFragment extends Fragment implements GoogleApiClient.OnCo
         });
 
     }
-
-
-    @Override
-    public void onStop() {
-        if (mGoogleApiClient != null && mGoogleApiClient.isConnected()) {
-            mGoogleApiClient.disconnect();
-        }
-        super.onStop();
-    }
-
-    public interface OnFragmentInteractionListener {
-        public void onFragmentInteraction(Uri uri);
-    }
-
-
 
     AutoCompleteTextView startPlaces;
     AutoCompleteTextView endPlaces;
@@ -344,5 +328,20 @@ public class CreateHuntFragment extends Fragment implements GoogleApiClient.OnCo
                 "Google Places API connection failed with error code:" +
                         connectionResult.getErrorCode(),
                 Toast.LENGTH_LONG).show();
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        if (mGoogleApiClient != null)
+            mGoogleApiClient.connect();
+    }
+
+    @Override
+    public void onStop() {
+        if (mGoogleApiClient != null && mGoogleApiClient.isConnected()) {
+            mGoogleApiClient.disconnect();
+        }
+        super.onStop();
     }
 }
