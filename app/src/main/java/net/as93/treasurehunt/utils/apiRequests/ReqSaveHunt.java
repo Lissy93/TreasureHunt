@@ -25,7 +25,7 @@ public class ReqSaveHunt extends APIRequests {
     }
 
     @Override
-    protected String doInBackground(String... uri) {
+    protected Object doInBackground(Object[] params) {
         int responseCode = 0;
 
         HttpURLConnection conn = null;

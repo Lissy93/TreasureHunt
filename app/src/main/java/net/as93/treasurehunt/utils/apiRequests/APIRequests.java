@@ -2,7 +2,7 @@ package net.as93.treasurehunt.utils.apiRequests;
 
 import android.os.AsyncTask;
 
-public class APIRequests extends AsyncTask<String, String, String> {
+public class APIRequests extends AsyncTask {
 
     private final String BASE_URL =
             "http://sots.brookes.ac.uk/~p0073862/services/hunt";
@@ -13,19 +13,24 @@ public class APIRequests extends AsyncTask<String, String, String> {
         this.parentFragment = ctmr;
     }
 
-    public final String getUrlForSaveHunts(){
+    protected final String getUrlForSaveHunts(){
         return BASE_URL+"/createhunt";
     }
 
-    @Override
-    protected String doInBackground(String... params) {
-        return null; // This will be overridden in the subclasses
+    protected final String getUrlForFetchingAllHunts(){
+        return BASE_URL+"/hunts";
     }
 
+
     @Override
-    protected void onPostExecute(String result) {
+    protected void onPostExecute(Object result) {
         super.onPostExecute(result);
         parentFragment.thereAreResults(result);
+
     }
 
+    @Override
+    protected Object doInBackground(Object[] params) {
+        return null;
+    }
 }

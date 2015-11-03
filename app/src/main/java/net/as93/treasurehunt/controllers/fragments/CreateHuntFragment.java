@@ -210,8 +210,8 @@ public class CreateHuntFragment extends Fragment
     }
 
     @Override
-    public void thereAreResults(String results) {
-        if(results.equals("200")){
+    public void thereAreResults(Object results) {
+        if(((String)results).equals("200")){
             huntWasSavedSccessfully();
         }
         else{
