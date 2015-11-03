@@ -26,10 +26,10 @@ public class ViewHuntsFragment extends Fragment implements ControllerThatMakesAR
     private ArrayList<Hunt> hunts = new ArrayList<Hunt>();
     private ArrayAdapter<Hunt> itemsAdapter;
 
-
     public ViewHuntsFragment() {
         // Required empty public constructor
     }
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -49,10 +49,8 @@ public class ViewHuntsFragment extends Fragment implements ControllerThatMakesAR
         itemsAdapter = new ArrayAdapter<Hunt>(getActivity(), android.R.layout.simple_list_item_1, hunts);
         itemsLst.setAdapter(itemsAdapter);
 
-        ReqFetchAllHunts readerTask = new ReqFetchAllHunts(this);
-        readerTask.execute();
-
-
+        ReqFetchAllHunts fetchAllHunts = new ReqFetchAllHunts(this);
+        fetchAllHunts.execute();
 
         itemsLst.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -65,6 +63,11 @@ public class ViewHuntsFragment extends Fragment implements ControllerThatMakesAR
         return view;
     }
 
+
+    /**
+     * This method is called after results are returned from the async
+     * @param results and ArrayList of Hunt objects
+     */
     @Override
     public void thereAreResults(Object results) {
         ArrayList<Hunt> formatedResults = (ArrayList<Hunt>)results;
