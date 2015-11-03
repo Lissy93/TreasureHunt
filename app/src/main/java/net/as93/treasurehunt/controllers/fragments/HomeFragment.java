@@ -10,12 +10,16 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import android.view.View.OnClickListener;
+import android.widget.Toast;
+
 
 import net.as93.treasurehunt.R;
 import net.as93.treasurehunt.controllers.dialogs.SetUsernameDialog;
 import net.as93.treasurehunt.models.Username;
 
-public class HomeFragment extends Fragment implements SharedPreferences.OnSharedPreferenceChangeListener {
+public class HomeFragment extends Fragment implements
+        SharedPreferences.OnSharedPreferenceChangeListener, OnClickListener {
 
     public final static String TYPE_OF_HUNTS = "net.as93.treasurehunt.TYPE_OF_HUNTS";
     Username username;
@@ -31,62 +35,19 @@ public class HomeFragment extends Fragment implements SharedPreferences.OnShared
         // Update Signed in as text
         updateSignedInText();
 
-
+        // Get all buttons and key elements
         Button myHuntsButton = (Button) view.findViewById(R.id.btnViewMyHunts);
-        myHuntsButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-                Fragment viewMyHunts = new ViewHuntsFragment();
-
-                Bundle argsAll = new Bundle();
-                argsAll.putChar(TYPE_OF_HUNTS, 'm');
-                viewMyHunts.setArguments(argsAll);
-
-                fragmentManager.beginTransaction()
-                        .replace(R.id.container, viewMyHunts)
-                        .commit();
-            }
-        });
-
         Button allHuntsButton = (Button) view.findViewById(R.id.btnViewAllHunts);
-        allHuntsButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-                Fragment viewAllHunts = new ViewHuntsFragment();
-                Bundle argsAll = new Bundle();
-                argsAll.putChar(TYPE_OF_HUNTS, 'a');
-                viewAllHunts.setArguments(argsAll);
-                fragmentManager.beginTransaction()
-                        .replace(R.id.container, viewAllHunts)
-                        .commit();
-            }
-        });
-
         Button createHuntButton = (Button) view.findViewById(R.id.btnCreateHunt);
-        createHuntButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-                Fragment createHunt = new CreateHuntFragment();
-                fragmentManager.beginTransaction()
-                        .replace(R.id.container, createHunt)
-                        .commit();
-            }
-        });
-
-
         TextView lblSignedInAs = (TextView) view.findViewById(R.id.lblSignedInAs);
-        lblSignedInAs.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                DialogFragment setUsernameDialog = SetUsernameDialog.newInstance(
-                        getActivity(), "");
-                setUsernameDialog.show(getActivity().getSupportFragmentManager(), "");
-            }
-        });
 
+        // Add the onItemSelected in this class as the buttons action listener
+        myHuntsButton.setOnClickListener(this);
+        allHuntsButton.setOnClickListener(this);
+        createHuntButton.setOnClickListener(this);
+        lblSignedInAs.setOnClickListener(this);
+
+        // Subscribe to username changes
         username.getPrefsObject().registerOnSharedPreferenceChangeListener(this);
 
         return view;
@@ -109,10 +70,83 @@ public class HomeFragment extends Fragment implements SharedPreferences.OnShared
         }
     }
 
-
-    public void onSharedPreferenceChanged(SharedPreferences arg0, String arg1)
-    {
+    /**
+     * When SharedPrefence subscribed item (just username) is changed
+     * call the updateSignedInText() to display correct name
+     */
+    @Override
+    public void onSharedPreferenceChanged(SharedPreferences arg0, String arg1){
         updateSignedInText();
+    }
+
+
+    /**
+     * Set the click listeners of gui items
+     * @param element View that was pressed
+     */
+    @Override
+    public void onClick(View element) {
+
+        int elemId = element.getId(); // The ID of the element pressed
+
+        // If the user isn't registered, they need to register first
+        if(!username.isUserRegistered()){
+            elemId = R.id.lblSignedInAs; // this will open up register dialog
+            Toast.makeText( // show toast message
+                    getActivity(),
+                    "You must register a username first",
+                    Toast.LENGTH_LONG).show();
+        }
+
+        // Determine which button was pressed and do relevant action
+        switch (elemId){
+            case (R.id.btnViewMyHunts): {
+                Bundle args = new Bundle();
+                args.putChar(TYPE_OF_HUNTS, 'm');
+                openFragment(new ViewHuntsFragment(), args);
+                break;
+            }
+            case (R.id.btnViewAllHunts): {
+                Bundle args = new Bundle();
+                args.putChar(TYPE_OF_HUNTS, 's');
+                openFragment(new ViewHuntsFragment(), args);
+                break;
+            }
+            case (R.id.btnCreateHunt): {
+                openFragment(new CreateHuntFragment());
+                break;
+            }
+            case (R.id.lblSignedInAs): {
+                DialogFragment setUsernameDialog = SetUsernameDialog.newInstance(getActivity(), "");
+                setUsernameDialog.show(getActivity().getSupportFragmentManager(), "");
+                break;
+            }
+
+        }
+
+    }
+
+
+    /**
+     * Switches visible fragment
+     * @param fragment Fragment to display
+     * @param arguments Bundle of arguments
+     */
+    private void openFragment(Fragment fragment, Bundle arguments){
+        FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+        fragment.setArguments(arguments);
+        fragmentManager.beginTransaction()
+                .replace(R.id.container, fragment)
+                .commit();
+    }
+
+
+    /**
+     * Switches visible fragment, with no Bundle or arguments
+     * @param fragment Fragment to display
+     */
+    private void openFragment(Fragment fragment){
+        openFragment(fragment, new Bundle());
     }
 
 }
