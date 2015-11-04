@@ -21,6 +21,9 @@ public class ViewHuntLegsListFragment extends Fragment {
      * fragment.
      */
     private static final String ARG_SECTION_NUMBER = "section_number";
+    private String KEY_HUNTNAME = "huntname";
+    private String KEY_LEG = "leg";
+
 
     /**
      * Returns a new instance of this fragment for the given section
@@ -46,6 +49,8 @@ public class ViewHuntLegsListFragment extends Fragment {
         btnAddLocation.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), AddLocationActivity.class);
+                intent.putExtra(KEY_HUNTNAME, "awesome hunt");
+                intent.putExtra(KEY_LEG, 1);
                 startActivity(intent);
             }
         });
