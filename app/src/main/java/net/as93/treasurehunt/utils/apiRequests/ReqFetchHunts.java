@@ -9,6 +9,7 @@ import org.xmlpull.v1.XmlPullParserFactory;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class ReqFetchHunts extends APIRequests {
 
@@ -61,6 +62,8 @@ public class ReqFetchHunts extends APIRequests {
         } catch (IOException e) {
             statusMessage = "IOException reading feed";
         }
+
+        result = removeNullValues(result);
 
         return result;
     }
@@ -164,14 +167,15 @@ public class ReqFetchHunts extends APIRequests {
      * @return Boolean weather or not to include Hunt
      */
     private boolean filterByUsername(String creator) {
-//        return strUsername == null || creator.equals(strUsername);
-
-        if(strUsername == null){return true; }
-
-        if(strUsername.equals(creator)){ return true; }
-
-        return false;
-
+        return strUsername == null || strUsername.equals(creator);
     }
 
+
+    /**
+     * Removes any empty of null values from ArrayList
+     */
+    private ArrayList<Hunt> removeNullValues(ArrayList<Hunt> startResults){
+        while(startResults.remove(null)); //TODO can this be more efficient? what if there are 10,000 hunts on demo day?
+        return startResults;
+    }
 }
