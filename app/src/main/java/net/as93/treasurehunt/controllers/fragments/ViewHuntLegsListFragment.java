@@ -11,9 +11,6 @@ import android.widget.Button;
 import net.as93.treasurehunt.R;
 import net.as93.treasurehunt.controllers.AddLocationActivity;
 
-/**
- * Created by Alicia on 15/10/2015.
- */
 
 public class ViewHuntLegsListFragment extends Fragment {
     /**
@@ -45,7 +42,6 @@ public class ViewHuntLegsListFragment extends Fragment {
 
         // Fetch the hunt name from intent bundle
         huntName = getActivity().getIntent().getExtras().getString("huntname");
-
 
         // Show the add new leg screen when button is pressed
         Button btnAddLocation = (Button) rootView.findViewById(R.id.btnAddLocation);
