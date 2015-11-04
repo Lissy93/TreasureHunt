@@ -10,14 +10,25 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 
-public class ReqFetchAllHunts extends APIRequests {
+public class ReqFetchHunts extends APIRequests {
+
+    private String strUsername = null;
 
     /**
-     * Constructor, sets the class variables
+     * Constructor for fetch ALL hunts
      * @param callingParent ControllerThatMakesRequest instance
      */
-    public ReqFetchAllHunts(ControllerThatMakesARequest callingParent) {
+    public ReqFetchHunts(ControllerThatMakesARequest callingParent) {
         super(callingParent);
+    }
+
+    /**
+     * Constructor for fetch hunts just for a specific user
+     * @param callingParent ControllerThatMakesRequest instance
+     */
+    public ReqFetchHunts(ControllerThatMakesARequest callingParent, String strUsername) {
+        super(callingParent);
+        this.strUsername = strUsername;
     }
 
 
@@ -89,7 +100,10 @@ public class ReqFetchAllHunts extends APIRequests {
             parser.next();
         }
         if (isEndTag(parser, "hunt")) {
+            if(filterByUsername(creator)){
             return new Hunt(huntName, creator);
+            }
+            else{ return null; }
         } else {
             return null;
         }
@@ -140,6 +154,23 @@ public class ReqFetchAllHunts extends APIRequests {
             throws XmlPullParserException {
         return (parser.getEventType() == XmlPullParser.END_TAG)
                 && parser.getName().equals(name);
+
+    }
+
+
+    /**
+     * If a username is specified then only return Hunts
+     * that were created by that user
+     * @return Boolean weather or not to include Hunt
+     */
+    private boolean filterByUsername(String creator) {
+//        return strUsername == null || creator.equals(strUsername);
+
+        if(strUsername == null){return true; }
+
+        if(strUsername.equals(creator)){ return true; }
+
+        return false;
 
     }
 

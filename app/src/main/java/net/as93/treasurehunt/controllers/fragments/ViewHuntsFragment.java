@@ -14,8 +14,9 @@ import android.widget.TextView;
 import net.as93.treasurehunt.R;
 import net.as93.treasurehunt.controllers.ViewHunt;
 import net.as93.treasurehunt.models.Hunt;
+import net.as93.treasurehunt.models.Username;
 import net.as93.treasurehunt.utils.apiRequests.ControllerThatMakesARequest;
-import net.as93.treasurehunt.utils.apiRequests.ReqFetchAllHunts;
+import net.as93.treasurehunt.utils.apiRequests.ReqFetchHunts;
 
 import java.util.ArrayList;
 
@@ -49,7 +50,15 @@ public class ViewHuntsFragment extends Fragment implements ControllerThatMakesAR
         itemsAdapter = new ArrayAdapter<Hunt>(getActivity(), android.R.layout.simple_list_item_1, hunts);
         itemsLst.setAdapter(itemsAdapter);
 
-        ReqFetchAllHunts fetchAllHunts = new ReqFetchAllHunts(this);
+
+        ReqFetchHunts fetchAllHunts;
+        if (typeOfHunt == 'm') {
+            fetchAllHunts = new ReqFetchHunts(this, new Username(getActivity()).fetchUsername());
+        }
+        else  {
+            fetchAllHunts = new ReqFetchHunts(this);
+        }
+
         fetchAllHunts.execute();
 
         itemsLst.setOnItemClickListener(new AdapterView.OnItemClickListener() {
