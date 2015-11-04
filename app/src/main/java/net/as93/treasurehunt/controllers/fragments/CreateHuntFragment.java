@@ -63,6 +63,8 @@ public class CreateHuntFragment extends Fragment
 
     ControllerThatMakesARequest dis = this;
 
+    private String finalHuntName;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -127,6 +129,7 @@ public class CreateHuntFragment extends Fragment
                             Toast.LENGTH_LONG).show();
                 }
                 else {
+                    finalHuntName = huntName;
                     ReqSaveHunt rt = new ReqSaveHunt(username, huntName, dis);
                     rt.execute();
                 }
@@ -373,6 +376,8 @@ public class CreateHuntFragment extends Fragment
 
         // Open up the add location activity
         Intent intent = new Intent(getActivity(), AddLocationActivity.class);
+        intent.putExtra("huntname", finalHuntName);
+        intent.putExtra("leg", 1);
         startActivity(intent);
     }
 

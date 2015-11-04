@@ -53,7 +53,7 @@ public class ViewHuntsFragment extends Fragment
         }
 
         // Create the list ready for putting hunts in it
-        ListView itemsLst = (ListView) view.findViewById(R.id.items_lst);
+        final ListView itemsLst = (ListView) view.findViewById(R.id.items_lst);
         itemsAdapter = new ArrayAdapter<Hunt>(getActivity(), android.R.layout.simple_list_item_1, hunts);
         itemsLst.setAdapter(itemsAdapter);
 
@@ -65,6 +65,7 @@ public class ViewHuntsFragment extends Fragment
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent = new Intent(getActivity(), ViewHunt.class);
+                intent.putExtra("huntname", itemsAdapter.getItem(position).getTitle());
                 startActivity(intent);
             }
         });

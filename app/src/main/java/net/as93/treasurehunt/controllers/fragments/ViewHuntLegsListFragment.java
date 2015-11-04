@@ -21,9 +21,7 @@ public class ViewHuntLegsListFragment extends Fragment {
      * fragment.
      */
     private static final String ARG_SECTION_NUMBER = "section_number";
-    private String KEY_HUNTNAME = "huntname";
-    private String KEY_LEG = "leg";
-
+    private String huntName;
 
     /**
      * Returns a new instance of this fragment for the given section
@@ -45,12 +43,17 @@ public class ViewHuntLegsListFragment extends Fragment {
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_view_hunt_list, container, false);
 
+        // Fetch the hunt name from intent bundle
+        huntName = getActivity().getIntent().getExtras().getString("huntname");
+
+
+        // Show the add new leg screen when button is pressed
         Button btnAddLocation = (Button) rootView.findViewById(R.id.btnAddLocation);
         btnAddLocation.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), AddLocationActivity.class);
-                intent.putExtra(KEY_HUNTNAME, "awesome hunt");
-                intent.putExtra(KEY_LEG, 1);
+                intent.putExtra("huntname", huntName);
+                intent.putExtra("leg", 1);
                 startActivity(intent);
             }
         });
