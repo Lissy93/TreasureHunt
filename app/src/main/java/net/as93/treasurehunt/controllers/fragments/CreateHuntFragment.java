@@ -1,6 +1,7 @@
 package net.as93.treasurehunt.controllers.fragments;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -33,6 +34,8 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 import net.as93.treasurehunt.R;
+import net.as93.treasurehunt.controllers.AddLocationActivity;
+import net.as93.treasurehunt.controllers.ViewHunt;
 import net.as93.treasurehunt.models.Username;
 import net.as93.treasurehunt.utils.apiRequests.ControllerThatMakesARequest;
 import net.as93.treasurehunt.utils.apiRequests.ReqSaveHunt;
@@ -353,11 +356,24 @@ public class CreateHuntFragment extends Fragment
 
 
     private void huntNameWasTaken(){
-        Toast.makeText(getActivity(), "A Hunt with that name already exists", Toast.LENGTH_SHORT).show();
+        Toast.makeText(
+                getActivity(),
+                "A Hunt with that name already exists",
+                Toast.LENGTH_SHORT
+        ).show();
     }
 
     private void huntWasSavedSccessfully(){
-        Toast.makeText(getActivity(), "Hunt was saved successfully", Toast.LENGTH_SHORT).show();
+        // Show success message
+        Toast.makeText(
+                getActivity(),
+                "Hunt was saved successfully",
+                Toast.LENGTH_SHORT
+        ).show();
+
+        // Open up the add location activity
+        Intent intent = new Intent(getActivity(), AddLocationActivity.class);
+        startActivity(intent);
     }
 
 }

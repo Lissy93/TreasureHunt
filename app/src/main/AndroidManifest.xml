@@ -48,6 +48,10 @@
             android:name=".controllers.ViewHunt"
             android:label="@string/title_activity_view_hunt" >
         </activity>
+        <activity
+            android:name=".controllers.AddLocationActivity"
+            android:label="@string/title_activity_add_location" >
+        </activity>
     </application>
 
 </manifest>

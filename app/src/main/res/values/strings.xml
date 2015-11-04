@@ -22,6 +22,7 @@
     <string name="tStartLocation">Enter start location</string>
     <string name="tvFinishLocation">Enter finish location</string>
     <string name="title_activity_view_hunt">ViewHunt</string>
+    <string name="title_activity_add_location">AddLocatiom</string>
 
     <string name="hello_world">Hello world!</string>
     <string name="huntNameHint">Hunt Name</string>
