@@ -5,7 +5,12 @@
     >
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:orientation="vertical" android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:dividerPadding="10dp"
+        android:paddingLeft="10dp"
+        android:paddingTop="20dp"
+        android:paddingRight="10dp"
+        android:paddingBottom="0dp">
 
         <TextView
             android:layout_width="wrap_content"
@@ -137,6 +142,6 @@
             android:tint="@android:color/white"
             android:textSize="@dimen/abc_text_size_large_material"
             android:elevation="4dp"
-            />
+            android:enabled="false" />
     </LinearLayout>
 </ScrollView>
