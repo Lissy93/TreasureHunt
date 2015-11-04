@@ -26,5 +26,24 @@
 
     <string name="hello_world">Hello world!</string>
     <string name="huntNameHint">Hunt Name</string>
+    <string name="al_huntName">Enter Hunt Name</string>
+    <string name="hint_huntName">Hunt Name</string>
+    <string name="al_location">Enter Location Name</string>
+    <string name="hint_location">Location Name</string>
+    <string name="al_position">Enter a Position in Hunt</string>
+    <string name="hint_position">Position</string>
+    <string name="al_description">Enter Location Description</string>
+    <string name="hint_description">Description</string>
+    <string name="al_latitude">Enter a Latitude</string>
+    <string name="hint_latitude">Latitude</string>
+    <string name="al_longitude">Enter Longitude</string>
+    <string name="hint_longitude">Longitude</string>
+    <string name="al_question">Enter Question for Location</string>
+    <string name="hint_question">Question</string>
+    <string name="al_answer">Enter Answer for Question</string>
+    <string name="hint_answer">Answer</string>
+    <string name="al_clue">Enter a Clue for the Question</string>
+    <string name="hint_clue">Clue</string>
+    <string name="al_saveLocation">Save Location</string>
 
 </resources>
