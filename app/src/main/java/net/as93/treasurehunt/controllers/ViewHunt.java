@@ -2,6 +2,7 @@ package net.as93.treasurehunt.controllers;
 
 import java.util.Locale;
 
+import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.app.ActionBar;
 import android.support.v4.app.Fragment;
@@ -18,20 +19,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import net.as93.treasurehunt.MainActivity;
 import net.as93.treasurehunt.R;
+import net.as93.treasurehunt.controllers.dialogs.SetUsernameDialog;
 import net.as93.treasurehunt.controllers.fragments.ViewHuntLegsListFragment;
 import net.as93.treasurehunt.controllers.fragments.ViewHuntLegsMapFragment;
 
 public class ViewHunt extends AppCompatActivity {
 
-    /**
-     * The {@link android.support.v4.view.PagerAdapter} that will provide
-     * fragments for each of the sections. We use a
-     * {@link FragmentPagerAdapter} derivative, which will keep every
-     * loaded fragment in memory. If this becomes too memory intensive, it
-     * may be best to switch to a
-     * {@link android.support.v4.app.FragmentStatePagerAdapter}.
-     */
     SectionsPagerAdapter mSectionsPagerAdapter;
 
     /**
@@ -58,31 +53,27 @@ public class ViewHunt extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
+        // Inflate the menu; this adds items to the action bar.
         getMenuInflater().inflate(R.menu.menu_view_hunt, menu);
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
+        // Handle action bar item clicks
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
-            return true;
+            DialogFragment setUsernameDialog = SetUsernameDialog.newInstance(
+                    ViewHunt.this, "");
+            setUsernameDialog.show(getSupportFragmentManager(), "");
         }
 
         return super.onOptionsItemSelected(item);
     }
 
 
-    /**
-     * A {@link FragmentPagerAdapter} that returns a fragment corresponding to
-     * one of the sections/tabs/pages.
-     */
     public class SectionsPagerAdapter extends FragmentPagerAdapter {
 
         public SectionsPagerAdapter(FragmentManager fm) {
@@ -92,7 +83,7 @@ public class ViewHunt extends AppCompatActivity {
         @Override
         public Fragment getItem(int position) {
             // getItem is called to instantiate the fragment for the given page.
-            // Return a PlaceholderFragment (defined as a static inner class below).
+            // Return a PlaceholderFragment
             switch(position){
                 case 0: return  ViewHuntLegsListFragment.newInstance(position + 1);
 
