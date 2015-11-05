@@ -136,23 +136,32 @@ public class AddLocationActivity extends AppCompatActivity
     }
 
 
-
+    /**
+     * Called when results are returned from the web service
+     * @param results String the response code returned from web service
+     */
     @Override
     public void thereAreResults(Object results) {
-
-        Toast.makeText(getApplicationContext(),((String)results), Toast.LENGTH_SHORT).show();
-
         if(results.equals("200")){ // Success!
             this.recreate();
             updateFieldsAfterSave();
+            showToast("Location saved successfully");
         }
         else{ // That didn't work :'(
-            Toast.makeText(
-                    getApplicationContext(),
-                    "There was an error with the information you entered",
-                    Toast.LENGTH_LONG
-            ).show();
+            showToast("There was an error with the information you entered");
         }
+    }
 
+
+    /**
+     * Just shows a Toast, less code repetition to put it here
+     * @param message String the message to show
+     */
+    private void showToast(String message){
+        Toast.makeText(
+                getApplicationContext(),
+                message,
+                Toast.LENGTH_LONG
+        ).show();
     }
 }
