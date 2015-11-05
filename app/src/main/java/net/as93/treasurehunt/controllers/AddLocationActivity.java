@@ -11,7 +11,6 @@ import android.widget.Toast;
 import net.as93.treasurehunt.R;
 import net.as93.treasurehunt.utils.apiRequests.ControllerThatMakesARequest;
 import net.as93.treasurehunt.utils.apiRequests.ReqAddLocation;
-import net.as93.treasurehunt.utils.apiRequests.ReqSaveHunt;
 
 import java.util.HashMap;
 
@@ -19,13 +18,19 @@ import java.util.HashMap;
 public class AddLocationActivity extends AppCompatActivity
         implements ControllerThatMakesARequest{
 
-    ControllerThatMakesARequest dis = this;
+    ControllerThatMakesARequest dis = this; // dis is this
+    HashMap<String, EditText> elements; // A HasMap of EditText form elements
+
+    // String list of all form elements on screen
+    private String[] elementNames = { "name", "location", "position",
+        "description", "latitude", "longitude", "question", "answer", "clue" };
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_location);
-
+        populateFormElementsMap();
         setHuntDetails();
     }
 
@@ -41,13 +46,30 @@ public class AddLocationActivity extends AppCompatActivity
                 rt.execute();
             }
         });
-
     }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_view_hunt, menu);
         return true;
+    }
+
+
+    /**
+     * Function populates the FormElements HashMap class variable
+     * with reference to each EditText form element on screen
+     */
+    private void populateFormElementsMap(){
+        elements = new HashMap<>(); // Initialise it
+        for(String element: elementNames){
+            elements.put(element,(
+                (EditText) this.findViewById(getResources().getIdentifier(
+                    "txt"+element.substring(0, 1).toUpperCase() + element.substring(1),
+                    "id", getPackageName()
+                    )
+            )));
+        }
     }
 
 
@@ -66,7 +88,7 @@ public class AddLocationActivity extends AppCompatActivity
         EditText txtLegNumber = (EditText) this.findViewById(R.id.txtPosition);
 
         // Set the text for hunt name and leg number
-        txtLegNumber.setText(legNumber+"");
+        txtLegNumber.setText(legNumber + "");
         txtHuntName.setText(huntName);
 
         // Disable the text fields, since the user won't need to change anymore
@@ -83,40 +105,40 @@ public class AddLocationActivity extends AppCompatActivity
 
         HashMap<String, String> results = new HashMap<>(); // To return
 
-        results.put("name",
-            ((EditText)this.findViewById(R.id.txtName)).getText().toString()
-        );
-        results.put("location",
-            ((EditText)this.findViewById(R.id.txtLocation)).getText().toString()
-        );
-        results.put("position",
-            ((EditText)this.findViewById(R.id.txtPosition)).getText().toString()
-        );
-        results.put("description",
-            ((EditText)this.findViewById(R.id.txtDescription)).getText().toString()
-        );
-        results.put("latitude",
-            ((EditText)this.findViewById(R.id.txtLatitude)).getText().toString()
-        );
-        results.put("longitude",
-            ((EditText)this.findViewById(R.id.txtLongitude)).getText().toString()
-        );
-        results.put("question",
-            ((EditText)this.findViewById(R.id.txtQuestion)).getText().toString()
-        );
-        results.put("answer",
-            ((EditText)this.findViewById(R.id.txtAnswer)).getText().toString()
-        );
-        results.put("clue",
-            ((EditText)this.findViewById(R.id.txtClue)).getText().toString()
-        );
+        for(String element: elementNames) {
+            results.put(element, elements.get(element).getText().toString());
+        }
 
         return results;
-
     }
+
+
+    /**
+     * Resets each EditText, and populates the hunt name and new position
+     * Called after a location leg is saved successfully
+     */
+    private void updateFieldsAfterSave(){
+        // TODO
+    }
+
+
 
     @Override
     public void thereAreResults(Object results) {
-        Toast.makeText(getApplicationContext(), ((String)results), Toast.LENGTH_SHORT).show();
+
+        Toast.makeText(getApplicationContext(),((String)results), Toast.LENGTH_SHORT).show();
+
+        if(results.equals("200")){ // Success!
+            this.recreate();
+            updateFieldsAfterSave();
+        }
+        else{ // That didn't work :'(
+            Toast.makeText(
+                    getApplicationContext(),
+                    "There was an error with the information you entered",
+                    Toast.LENGTH_LONG
+            ).show();
+        }
+
     }
 }
