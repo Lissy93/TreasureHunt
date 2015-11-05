@@ -4,7 +4,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 
 
-public class ReqAddLocation extends PostRequest {
+public class PostReqAddLocation extends PostRequest {
 
     HashMap legDetails;
 
@@ -13,7 +13,7 @@ public class ReqAddLocation extends PostRequest {
      * @param formValues a HashMap of all the values from the nine form elements
      * @param callingParent ControllerThatMakesRequest instance
      */
-    public ReqAddLocation(HashMap formValues, ControllerThatMakesARequest callingParent) {
+    public PostReqAddLocation(HashMap formValues, ControllerThatMakesARequest callingParent) {
         super(callingParent);
         this.legDetails = formValues;
     }

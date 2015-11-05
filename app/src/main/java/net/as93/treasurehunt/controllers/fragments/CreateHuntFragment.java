@@ -35,10 +35,9 @@ import com.google.android.gms.maps.model.MarkerOptions;
 
 import net.as93.treasurehunt.R;
 import net.as93.treasurehunt.controllers.AddLocationActivity;
-import net.as93.treasurehunt.controllers.ViewHunt;
 import net.as93.treasurehunt.models.Username;
 import net.as93.treasurehunt.utils.apiRequests.ControllerThatMakesARequest;
-import net.as93.treasurehunt.utils.apiRequests.ReqSaveHunt;
+import net.as93.treasurehunt.utils.apiRequests.PostReqSaveHunt;
 import net.as93.treasurehunt.utils.autocomplete.PlaceJsonParser;
 
 import org.json.JSONObject;
@@ -130,7 +129,7 @@ public class CreateHuntFragment extends Fragment
                 }
                 else {
                     finalHuntName = huntName;
-                    ReqSaveHunt rt = new ReqSaveHunt(username, huntName, dis);
+                    PostReqSaveHunt rt = new PostReqSaveHunt(username, huntName, dis);
                     rt.execute();
                 }
             }

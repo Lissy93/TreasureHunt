@@ -17,7 +17,7 @@ import net.as93.treasurehunt.controllers.ViewHunt;
 import net.as93.treasurehunt.models.Hunt;
 import net.as93.treasurehunt.models.Username;
 import net.as93.treasurehunt.utils.apiRequests.ControllerThatMakesARequest;
-import net.as93.treasurehunt.utils.apiRequests.ReqFetchHunts;
+import net.as93.treasurehunt.utils.apiRequests.GetReqFetchHunts;
 
 import java.util.ArrayList;
 
@@ -85,13 +85,13 @@ public class ViewHuntsFragment extends Fragment
      * If displaying just users hunts, find the username and pass it as a param
      */
     private void updateHunts(){
-        ReqFetchHunts fetchAllHunts;
+        GetReqFetchHunts fetchAllHunts;
         if (typeOfHunt == 'm') {
-            fetchAllHunts = new ReqFetchHunts(
+            fetchAllHunts = new GetReqFetchHunts(
                     this, new Username(getActivity()).fetchUsername());
         }
         else  {
-            fetchAllHunts = new ReqFetchHunts(this);
+            fetchAllHunts = new GetReqFetchHunts(this);
         }
         fetchAllHunts.execute();
     }

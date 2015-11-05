@@ -8,7 +8,7 @@ import org.xmlpull.v1.XmlPullParserException;
 
 import java.io.IOException;
 
-public class ReqFetchHunts extends GetRequest {
+public class GetReqFetchHunts extends GetRequest {
 
     private String strUsername = null;
 
@@ -16,7 +16,7 @@ public class ReqFetchHunts extends GetRequest {
      * Constructor for fetch ALL hunts
      * @param callingParent ControllerThatMakesRequest instance
      */
-    public ReqFetchHunts(ControllerThatMakesARequest callingParent) {
+    public GetReqFetchHunts(ControllerThatMakesARequest callingParent) {
         super(callingParent);
     }
 
@@ -24,7 +24,7 @@ public class ReqFetchHunts extends GetRequest {
      * Constructor for fetch hunts just for a specific user
      * @param callingParent ControllerThatMakesRequest instance
      */
-    public ReqFetchHunts(ControllerThatMakesARequest callingParent, String strUsername) {
+    public GetReqFetchHunts(ControllerThatMakesARequest callingParent, String strUsername) {
         super(callingParent);
         this.strUsername = strUsername;
     }

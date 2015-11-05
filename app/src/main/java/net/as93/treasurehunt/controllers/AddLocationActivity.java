@@ -10,7 +10,7 @@ import android.widget.Toast;
 
 import net.as93.treasurehunt.R;
 import net.as93.treasurehunt.utils.apiRequests.ControllerThatMakesARequest;
-import net.as93.treasurehunt.utils.apiRequests.ReqAddLocation;
+import net.as93.treasurehunt.utils.apiRequests.PostReqAddLocation;
 
 import java.util.HashMap;
 
@@ -42,7 +42,7 @@ public class AddLocationActivity extends AppCompatActivity
         Button btnSaveLeg = (Button) findViewById(R.id.btnSaveLocation);
         btnSaveLeg.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                ReqAddLocation rt = new ReqAddLocation(getValuesFromForm(), dis);
+                PostReqAddLocation rt = new PostReqAddLocation(getValuesFromForm(), dis);
                 rt.execute();
             }
         });

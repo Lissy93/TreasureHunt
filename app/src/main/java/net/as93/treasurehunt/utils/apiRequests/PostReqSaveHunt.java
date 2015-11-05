@@ -3,7 +3,7 @@ package net.as93.treasurehunt.utils.apiRequests;
 import java.nio.charset.StandardCharsets;
 
 
-public class ReqSaveHunt extends PostRequest {
+public class PostReqSaveHunt extends PostRequest {
 
     String huntName; // The user chosen unique text identifier for hunt
     String username; // Username (from prefs)
@@ -14,8 +14,8 @@ public class ReqSaveHunt extends PostRequest {
      * @param strHuntName String hunt name
      * @param callingParent ControllerThatMakesRequest instance
      */
-    public ReqSaveHunt(String strUsername, String strHuntName,
-                       ControllerThatMakesARequest callingParent){
+    public PostReqSaveHunt(String strUsername, String strHuntName,
+                           ControllerThatMakesARequest callingParent){
         super(callingParent);
         this.huntName = strHuntName;
         this.username = strUsername;
