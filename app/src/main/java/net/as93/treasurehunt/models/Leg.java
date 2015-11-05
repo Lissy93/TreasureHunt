@@ -6,7 +6,6 @@ package net.as93.treasurehunt.models;
 public class Leg {
 
     private String name;
-    private String location;
     private String position;
     private String description;
     private String latitude;
@@ -17,7 +16,6 @@ public class Leg {
 
 
     public Leg(String name,
-               String location,
                String position,
                String description,
                String latitude,
@@ -26,7 +24,6 @@ public class Leg {
                String answer,
                String clue) {
         this.name = name;
-        this.location = location;
         this.position = position;
         this.description = description;
         this.latitude = latitude;
@@ -38,10 +35,6 @@ public class Leg {
 
     public String getName() {
         return name;
-    }
-
-    public String getLocation() {
-        return location;
     }
 
     public String getPosition() {
@@ -70,5 +63,11 @@ public class Leg {
 
     public String getClue() {
         return clue;
+    }
+
+
+    @Override
+    public String toString() {
+        return getName();
     }
 }

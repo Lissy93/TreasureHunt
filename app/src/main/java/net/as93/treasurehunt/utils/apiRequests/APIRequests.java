@@ -75,4 +75,13 @@ public class APIRequests extends AsyncTask {
         return BASE_URL+"/hunts";
     }
 
+
+    /**
+     * Forms URL String for fetch all legs for given hunt end point
+     * @return String URL
+     */
+    protected final String getUrlForFetchingLegsOfHunt(String huntName){
+        return BASE_URL+"/locations/"+huntName;
+    }
+
 }
