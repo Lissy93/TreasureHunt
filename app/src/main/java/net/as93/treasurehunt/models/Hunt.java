@@ -13,7 +13,6 @@ public class Hunt {
     public String getTitle(){
         return title;
     }
-
     public String getCreator() {
         return creator;
     }
