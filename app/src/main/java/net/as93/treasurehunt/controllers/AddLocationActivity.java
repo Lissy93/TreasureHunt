@@ -118,7 +118,21 @@ public class AddLocationActivity extends AppCompatActivity
      * Called after a location leg is saved successfully
      */
     private void updateFieldsAfterSave(){
-        // TODO
+        // Get the hunt name and leg, as they will need to stay
+        String currentHuntName = elements.get("name").getText().toString();
+        String currentLeg = elements.get("position").getText().toString();
+
+        // Clear all text fields values
+        for (EditText textField : elements.values()) {
+            textField.setText("");
+        }
+
+        // Get the new position
+        String nextLeg = (Integer.parseInt(currentLeg)+1)+"";
+
+        // Put the hunt name and leg back into edittext
+        elements.get("name").setText(currentHuntName);
+        elements.get("position").setText(nextLeg);
     }
 
 
