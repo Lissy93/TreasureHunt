@@ -4,7 +4,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 
 
-public class ReqAddLocation extends APIRequests {
+public class ReqAddLocation extends PostRequest {
 
     HashMap legDetails;
 

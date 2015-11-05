@@ -3,7 +3,7 @@ package net.as93.treasurehunt.utils.apiRequests;
 import java.nio.charset.StandardCharsets;
 
 
-public class ReqSaveHunt extends APIRequests {
+public class ReqSaveHunt extends PostRequest {
 
     String huntName; // The user chosen unique text identifier for hunt
     String username; // Username (from prefs)
