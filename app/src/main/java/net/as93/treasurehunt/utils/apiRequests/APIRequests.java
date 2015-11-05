@@ -2,19 +2,13 @@ package net.as93.treasurehunt.utils.apiRequests;
 
 import android.os.AsyncTask;
 
-import java.io.DataOutputStream;
-import java.io.IOException;
-import java.net.HttpURLConnection;
-import java.net.URL;
-
 public class APIRequests extends AsyncTask {
-
-    // The base URL constant for forming the end points
-    private final String BASE_URL =
-            "http://sots.brookes.ac.uk/~p0073862/services/hunt";
 
     // This is required to update the UI on postExecute
     ControllerThatMakesARequest parentFragment;
+
+    // For accessing the URL end points
+    APIEndPoints endPoints = new APIEndPoints();
 
 
     /**
@@ -50,38 +44,12 @@ public class APIRequests extends AsyncTask {
 
 
     /**
-     * Forms URL String for save hunts end point
-     * @return String URL
+     * Getter for accessing the API end points
+     * @return Instance of APIEndPoints
      */
-    protected final String getUrlForSaveHunts(){
-        return BASE_URL+"/createhunt";
+    protected APIEndPoints getEndPoints(){
+        return endPoints;
     }
 
-
-    /**
-     * Forms URL String for save location or leg to a hunt
-     * @return String URL
-     */
-    protected final String getUrlForSaveLocation(){
-        return BASE_URL+"/addlocation";
-    }
-
-
-    /**
-     * Forms URL String for fetch all hunts end point
-     * @return String URL
-     */
-    protected final String getUrlForFetchingAllHunts(){
-        return BASE_URL+"/hunts";
-    }
-
-
-    /**
-     * Forms URL String for fetch all legs for given hunt end point
-     * @return String URL
-     */
-    protected final String getUrlForFetchingLegsOfHunt(String huntName){
-        return BASE_URL+"/locations/"+huntName;
-    }
 
 }

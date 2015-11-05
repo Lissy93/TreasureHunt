@@ -24,7 +24,7 @@ public class PostReqSaveHunt extends PostRequest {
 
     @Override
     protected Object doInBackground(Object[] params) {
-        return reuasablePostRequest(makeParams(), getUrlForSaveHunts());
+        return reuasablePostRequest(makeParams(), getEndPoints().getUrlForSaveHunts());
     }
 
 

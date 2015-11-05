@@ -9,7 +9,7 @@ import java.net.URL;
 import java.util.ArrayList;
 
 /**
- * Created by Alicia on 05/11/2015.
+ * Handles all Get Requests
  */
 public class GetRequest extends APIRequests {
 

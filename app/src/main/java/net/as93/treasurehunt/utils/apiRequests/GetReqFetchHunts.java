@@ -1,16 +1,14 @@
 package net.as93.treasurehunt.utils.apiRequests;
 
-
 import net.as93.treasurehunt.models.Hunt;
-
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
-
 import java.io.IOException;
 
 public class GetReqFetchHunts extends GetRequest {
 
     private String strUsername = null;
+
 
     /**
      * Constructor for fetch ALL hunts
@@ -19,6 +17,7 @@ public class GetReqFetchHunts extends GetRequest {
     public GetReqFetchHunts(ControllerThatMakesARequest callingParent) {
         super(callingParent);
     }
+
 
     /**
      * Constructor for fetch hunts just for a specific user
@@ -61,8 +60,6 @@ public class GetReqFetchHunts extends GetRequest {
     }
 
 
-
-
     /**
      * If a username is specified then only return Hunts
      * that were created by that user
@@ -80,7 +77,7 @@ public class GetReqFetchHunts extends GetRequest {
      */
     @Override
     protected Object doInBackground(Object[] params) {
-        return reusableGetRequest("hunt", getUrlForFetchingAllHunts());
+        return reusableGetRequest("hunt", getEndPoints().getUrlForFetchingAllHunts());
     }
 
 }

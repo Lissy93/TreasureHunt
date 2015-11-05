@@ -85,7 +85,7 @@ public class GetReqFetchLegs extends GetRequest {
      */
     @Override
     protected Object doInBackground(Object[] params) {
-        return reusableGetRequest("location", getUrlForFetchingLegsOfHunt(huntName));
+        return reusableGetRequest("location", getEndPoints().getUrlForFetchingLegsOfHunt(huntName));
     }
 
 }

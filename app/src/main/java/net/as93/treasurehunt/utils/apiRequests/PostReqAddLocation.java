@@ -20,7 +20,7 @@ public class PostReqAddLocation extends PostRequest {
 
     @Override
     protected Object doInBackground(Object[] params) {
-        return reuasablePostRequest(makeParams(), getUrlForSaveLocation());
+        return reuasablePostRequest(makeParams(), getEndPoints().getUrlForSaveLocation());
     }
 
 

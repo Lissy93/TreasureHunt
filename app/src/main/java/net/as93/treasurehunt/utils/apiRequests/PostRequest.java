@@ -1,4 +1,3 @@
-
 package net.as93.treasurehunt.utils.apiRequests;
 
 import java.io.DataOutputStream;
@@ -7,7 +6,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 
 /**
- * Created by Alicia on 05/11/2015.
+ * Handles all POST requests, like a BOSS
  */
 public class PostRequest extends APIRequests {
     /**
