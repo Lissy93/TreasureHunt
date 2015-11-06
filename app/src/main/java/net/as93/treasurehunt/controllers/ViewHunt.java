@@ -17,6 +17,7 @@ import net.as93.treasurehunt.controllers.dialogs.SetUsernameDialog;
 import net.as93.treasurehunt.controllers.fragments.HuntSummaryFragment;
 import net.as93.treasurehunt.controllers.fragments.ViewHuntLegsListFragment;
 import net.as93.treasurehunt.controllers.fragments.ViewHuntLegsMapFragment;
+import net.as93.treasurehunt.models.Username;
 
 public class ViewHunt extends AppCompatActivity {
 
@@ -111,6 +112,16 @@ public class ViewHunt extends AppCompatActivity {
             }
             return null;
         }
+    }
+
+
+    /**
+     * Determines if the currently logged in user is the creator of this hunt
+     * @return Boolean true if they are the creator, else false
+     */
+    public boolean isUserTheCreator(){
+        Username username = new Username(this);
+        return username.fetchUsername().equals(this.creator);
     }
 
     public int getNumLocations() {
