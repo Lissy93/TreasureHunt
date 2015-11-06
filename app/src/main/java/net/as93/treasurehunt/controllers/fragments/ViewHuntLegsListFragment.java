@@ -3,6 +3,7 @@ package net.as93.treasurehunt.controllers.fragments;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -99,5 +100,6 @@ public class ViewHuntLegsListFragment extends Fragment implements ControllerThat
         ArrayList<Leg> formattedResults = (ArrayList<Leg>)results;
         legs.clear();
         legs.addAll(formattedResults);
-        itemsAdapter.notifyDataSetChanged();    }
+        itemsAdapter.notifyDataSetChanged();
+    }
 }

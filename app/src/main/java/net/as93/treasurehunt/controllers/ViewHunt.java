@@ -17,6 +17,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import net.as93.treasurehunt.MainActivity;
@@ -39,9 +40,7 @@ public class ViewHunt extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_hunt);
 
-
-        // Create the adapter that will return a fragment for each of the three
-        // primary sections of the activity.
+        // Create the adapter that will return a fragment for each primary sections
         mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
 
         // Set up the ViewPager with the sections adapter.

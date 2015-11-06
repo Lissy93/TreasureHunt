@@ -13,7 +13,7 @@ public class GetReqFetchLegs extends GetRequest {
 
     /**
      * Constructor
-     * @param callingParent ControllerThatMakesRequest instance
+     * @param callingParent ControllerThatMake  sRequest instance
      */
     public GetReqFetchLegs(ControllerThatMakesARequest callingParent, String huntName) {
         super(callingParent);
