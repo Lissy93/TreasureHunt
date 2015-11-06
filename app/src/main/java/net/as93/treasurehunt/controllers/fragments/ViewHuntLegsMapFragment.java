@@ -1,5 +1,6 @@
 package net.as93.treasurehunt.controllers.fragments;
 
+        import android.graphics.Color;
         import android.os.Bundle;
         import android.support.v4.app.Fragment;
         import android.view.LayoutInflater;
@@ -15,6 +16,8 @@ package net.as93.treasurehunt.controllers.fragments;
         import com.google.android.gms.maps.model.LatLngBounds;
         import com.google.android.gms.maps.model.Marker;
         import com.google.android.gms.maps.model.MarkerOptions;
+        import com.google.android.gms.maps.model.Polyline;
+        import com.google.android.gms.maps.model.PolylineOptions;
 
         import net.as93.treasurehunt.R;
         import net.as93.treasurehunt.models.Leg;
@@ -77,7 +80,10 @@ public class ViewHuntLegsMapFragment extends Fragment implements ControllerThatM
         // For calculating the bounds to zoom to
         LatLngBounds.Builder builder = new LatLngBounds.Builder();
 
+        LatLng[] llList = new LatLng[formattedResults.size()];
+
         // For each location le
+        int c = 0;
         for(Leg leg: formattedResults){
 
             // Make Lat Long Object
@@ -86,10 +92,17 @@ public class ViewHuntLegsMapFragment extends Fragment implements ControllerThatM
                     Double.valueOf(leg.getLongitude())
             );
 
+            llList[c] = ll;
+
             // Add maker to map
-            map.addMarker(new MarkerOptions().position(ll).title(leg.getName()));
+            map.addMarker(
+                new MarkerOptions()
+                    .position(ll).title(leg.getName()).snippet(leg.getDescription()
+                ));
 
             builder.include(ll);
+
+            c++;
 
         }
 
@@ -99,5 +112,14 @@ public class ViewHuntLegsMapFragment extends Fragment implements ControllerThatM
         CameraUpdate cu = CameraUpdateFactory.newLatLngBounds(bounds, padding);
 
         map.animateCamera(cu); // Set the view
+
+
+        Polyline line = map.addPolyline(new PolylineOptions()
+                .add(llList)
+                .width(5)
+                .color(Color.RED));
+        line.setGeodesic(true);
+
+
     }
 }
