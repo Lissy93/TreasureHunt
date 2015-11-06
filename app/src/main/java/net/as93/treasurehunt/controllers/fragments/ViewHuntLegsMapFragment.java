@@ -7,6 +7,7 @@ import android.view.InflateException;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -24,6 +25,7 @@ import net.as93.treasurehunt.utils.apiRequests.ControllerThatMakesARequest;
 import net.as93.treasurehunt.utils.apiRequests.GetReqFetchLegs;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 public class ViewHuntLegsMapFragment extends Fragment implements ControllerThatMakesARequest{
     /**
@@ -79,52 +81,76 @@ public class ViewHuntLegsMapFragment extends Fragment implements ControllerThatM
     @Override
     public void thereAreResults(Object results) {
 
+        putResultsOnTheMap(results);
+
+    }
+
+
+    /**
+     * This method does everything related to displaying the results on the
+     * Google Map. It puts markers for each location, with the location name
+     * and description, it also creates a polyline path joining together points
+     * @param results Object
+     */
+    private void putResultsOnTheMap(Object results){
         // The results
         ArrayList<Leg> formattedResults = (ArrayList<Leg>)results;
 
         // For calculating the bounds to zoom to
         LatLngBounds.Builder builder = new LatLngBounds.Builder();
 
+        // Will store a list of latitude and longitudes, for drawing polylines
         LatLng[] llList = new LatLng[formattedResults.size()];
 
-        // For each location le
-        int c = 0;
+        // For each location location
+        int c = 0; // counter
         for(Leg leg: formattedResults){
 
             // Make Lat Long Object
-            LatLng ll = new LatLng(
-                    Double.valueOf(leg.getLatitude()),
-                    Double.valueOf(leg.getLongitude())
-            );
-
-            llList[c] = ll;
+            LatLng ll;
+            try {
+                ll = new LatLng(
+                        Double.valueOf(leg.getLatitude()),
+                        Double.valueOf(leg.getLongitude())
+                );
+            }
+            catch (Exception e){
+                ll = new LatLng(
+                        51.7+((new Random().nextInt(0 - 10 + 1))/1000),
+                        -1.0+((new Random().nextInt(0 - 10 + 1))/1000)
+                );
+            }
+            llList[c] = ll; // Add the latitude and longitude to list for later
 
             // Add maker to map
             map.addMarker(
-                new MarkerOptions()
-                    .position(ll).title(leg.getName()).snippet(leg.getDescription()
-                ));
+                    new MarkerOptions()
+                            .position(ll).title(leg.getName()).snippet(leg.getDescription()
+                    ));
 
             builder.include(ll);
-
             c++;
-
         }
 
-        LatLngBounds bounds = builder.build();
+        if(c>0) { // Only do this is we have actually got results
+            LatLngBounds bounds = builder.build();
+            int padding = 40; // offset from edges of the map in pixels
+            CameraUpdate cu = CameraUpdateFactory.newLatLngBounds(bounds, padding);
+            map.animateCamera(cu); // Set the view
 
-        int padding = 40; // offset from edges of the map in pixels
-        CameraUpdate cu = CameraUpdateFactory.newLatLngBounds(bounds, padding);
-
-        map.animateCamera(cu); // Set the view
-
-
-        Polyline line = map.addPolyline(new PolylineOptions()
-                .add(llList)
-                .width(5)
-                .color(Color.RED));
-        line.setGeodesic(true);
-
+            Polyline line = map.addPolyline(new PolylineOptions()
+                    .add(llList)
+                    .width(5)
+                    .color(Color.RED));
+            line.setGeodesic(true);
+        }
+        else{
+            Toast.makeText(getActivity(),
+                    "There were no locations to display on the map for this hunt",
+                    Toast.LENGTH_LONG).show();
+        }
 
     }
+
 }
+
