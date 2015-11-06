@@ -2,6 +2,7 @@ package net.as93.treasurehunt.controllers.fragments;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,19 +14,26 @@ import android.widget.Toast;
 import net.as93.treasurehunt.R;
 import net.as93.treasurehunt.controllers.AddLocationActivity;
 import net.as93.treasurehunt.controllers.ViewHunt;
+import net.as93.treasurehunt.controllers.dialogs.LocationDetailsDialog;
+import net.as93.treasurehunt.models.Leg;
 import net.as93.treasurehunt.models.Username;
 import net.as93.treasurehunt.utils.FetchRegisteredUsers;
+import net.as93.treasurehunt.utils.GetAllLocations;
+import net.as93.treasurehunt.utils.GetReachedLocations;
+import net.as93.treasurehunt.utils.IGetLocations;
+import net.as93.treasurehunt.utils.IGetStrings;
 import net.as93.treasurehunt.utils.RegisterUserOnHunt;
 
 import java.util.ArrayList;
 
 
-public class HuntSummaryFragment extends Fragment{
+public class HuntSummaryFragment extends Fragment implements IGetLocations, IGetStrings{
 
     // Hunt Details
     private String huntName;
     private String username;
     private boolean playerRegistered = false;
+    private ArrayList<Leg> locations = null;
 
     // Buttons
     private Button btnRegisterOnHunt;
@@ -81,6 +89,8 @@ public class HuntSummaryFragment extends Fragment{
         });
 
         checkIfPlayerRegisteredOnHunt();
+
+        new GetAllLocations(this, huntName);
 
         return rootView;
     }
@@ -162,7 +172,7 @@ public class HuntSummaryFragment extends Fragment{
      * and displays dialog box
      */
     private void showNextClue(){
-        // TODO
+        new GetReachedLocations(this, huntName, username);
     }
 
 
@@ -189,4 +199,73 @@ public class HuntSummaryFragment extends Fragment{
         intent.putExtra("leg", ((ViewHunt) getActivity()).getNumLocations() + 1);
         startActivity(intent);
     }
+
+
+
+
+    /**
+     * Shows the dialog box with details, questiona and clue
+     * @param location int the location position in hunt
+     */
+    private void showTheQuestionDialog(Leg location){
+        DialogFragment locationDetails = LocationDetailsDialog.newInstance();
+        locationDetails.setArguments(makeDialogBundle(location));
+        locationDetails.show(getFragmentManager(), "");
+    }
+
+    /**
+     * Makes the Bundle of arguments to pass to the dialog that displays
+     * Location details.
+     * @param leg  object
+     * @return Bundle populated and ready to go
+     */
+    private Bundle makeDialogBundle(Leg leg){
+        Bundle args = new Bundle();
+        args.putString("locationName", leg.getName());
+        args.putString("locationDescription", leg.getDescription());
+        args.putString("locationLat", leg.getLatitude());
+        args.putString("locationLng", leg.getLongitude());
+        args.putString("locationParent", huntName);
+        args.putString("locationPosition", leg.getPosition());
+        args.putBoolean("isLastLeg", false);
+            args.putString("locationQuestion", leg.getQuestion());
+            args.putString("locationClue", leg.getClue());
+            args.putString("locationAnswer", leg.getAnswer());
+        return args;
+    }
+
+    @Override
+    public void locationsReturned(Object results) {
+        locations = (ArrayList<Leg>)results;
+    }
+
+    @Override
+    public void stringsReturned(ArrayList<String> results) {
+        if(locations.size()>0) {
+            Leg legToReturn = locations.get(locations.size() - 1);
+            for (Leg leg : locations) {
+                boolean found = false;
+                for (String visitedPlace : results) {
+                    if (leg.getName().equals(visitedPlace)) {
+                        found = true;
+                    }
+                }
+                if (!found) {
+                    legToReturn = leg;
+                    break;
+                }
+            }
+            showTheQuestionDialog(legToReturn);
+        }
+        else{
+            Toast.makeText(
+                    getActivity(),
+                    "Error: The creator of this hunt has not yet added any locations",
+                    Toast.LENGTH_SHORT).show();
+        }
+
+
+    }
 }
+
+

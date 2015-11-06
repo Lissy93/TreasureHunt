@@ -1,6 +1,5 @@
 package net.as93.treasurehunt.controllers.fragments;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
@@ -13,25 +12,22 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import net.as93.treasurehunt.MainActivity;
 import net.as93.treasurehunt.R;
 import net.as93.treasurehunt.controllers.ViewHunt;
 import net.as93.treasurehunt.controllers.dialogs.LocationDetailsDialog;
 import net.as93.treasurehunt.models.Leg;
 import net.as93.treasurehunt.models.Username;
+import net.as93.treasurehunt.utils.GetAllLocations;
+import net.as93.treasurehunt.utils.GetReachedLocations;
+import net.as93.treasurehunt.utils.IGetLocations;
 import net.as93.treasurehunt.utils.IShowNumberOfLocations;
 import net.as93.treasurehunt.utils.NumberOfLocationsInHunt;
-import net.as93.treasurehunt.utils.apiRequests.ControllerThatMakesARequest;
-import net.as93.treasurehunt.utils.apiRequests.GetReqFetchLegs;
-import net.as93.treasurehunt.utils.apiRequests.GetReqReachedLocations;
-
-import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 
 
 public class ViewHuntLegsListFragment extends Fragment
-        implements ControllerThatMakesARequest, IShowNumberOfLocations{
+        implements  IShowNumberOfLocations, IGetLocations{
     /**
      * The fragment argument representing the section number for this
      * fragment.
@@ -81,9 +77,7 @@ public class ViewHuntLegsListFragment extends Fragment
         itemsLst.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                DialogFragment locationDetails = LocationDetailsDialog.newInstance();
-                locationDetails.setArguments(makeDialogBundle(position));
-                locationDetails.show(getFragmentManager(), "");
+                showClue(position);
             }
         });
 
@@ -98,16 +92,13 @@ public class ViewHuntLegsListFragment extends Fragment
      * Call the fetch legs request and sets result to adapter to display
      */
     private void updateLegs(){
+        new GetAllLocations(this, huntName);
         if(((ViewHunt)getActivity()).isUserTheCreator()){
             // User is the creator of the hunt? If so show all locations
-            GetReqFetchLegs fetchAllLegs;
-            fetchAllLegs = new GetReqFetchLegs(this, huntName);
-            fetchAllLegs.execute();
+
         }
         else{ // The user did not create this hunt. Only show locations they have visited
-            GetReqReachedLocations reachedLocationsReq =
-                    new GetReqReachedLocations(this, huntName, (new Username(getActivity())).fetchUsername());
-            reachedLocationsReq.execute();
+//            new GetReachedLocations(this, huntName, ((new Username(getActivity())).fetchUsername()));
         }
 
     }
@@ -160,23 +151,36 @@ public class ViewHuntLegsListFragment extends Fragment
     }
 
 
-    /**
-     * This method is called after results are returned from the async
-     * @param results and ArrayList of Leg objects
-     */
+
     @Override
-    public void thereAreResults(Object results) {
+    public void numberOfLocationsReturned(int num) {
+        lblNumOfLegs.setText("Displaying " + legs.size() + " out of " + num + " Locations");
+    }
+
+
+    /**
+     * Shows the dialog box with details, questiona and clue
+     * @param position int the location position in hunt
+     */
+    private void showClue(int position){
+        DialogFragment locationDetails = LocationDetailsDialog.newInstance();
+        locationDetails.setArguments(makeDialogBundle(position));
+        locationDetails.show(getFragmentManager(), "");
+    }
+
+    @Override
+    public void locationsReturned(Object results) {
         ArrayList<Leg> formattedResults = (ArrayList<Leg>)results;
         legs.clear();
         legs.addAll(formattedResults);
         itemsAdapter.notifyDataSetChanged();
 //        showResultsMessage(formattedResults.size()); // Show message
-        ((ViewHunt)getActivity()).setNumLocations(formattedResults.size());
+        try {
+            ((ViewHunt) getActivity()).setNumLocations(formattedResults.size());
+        }
+        catch (Exception e){
+            ((ViewHunt) getActivity()).setNumLocations(0);
 
-    }
-
-    @Override
-    public void numberOfLocationsReturned(int num) {
-        lblNumOfLegs.setText("Displaying "+legs.size()+ " out of "+num+" Locations");
+        }
     }
 }

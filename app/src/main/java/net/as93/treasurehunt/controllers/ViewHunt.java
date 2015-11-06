@@ -88,7 +88,7 @@ public class ViewHunt extends AppCompatActivity {
 
         @Override
         public int getCount() {
-            return 3; // How many pages to display in slide view
+            return 3; // How many pages to d
         }
 
         @Override

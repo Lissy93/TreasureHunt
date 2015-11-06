@@ -21,14 +21,19 @@ import com.google.android.gms.maps.model.Polyline;
 import com.google.android.gms.maps.model.PolylineOptions;
 
 import net.as93.treasurehunt.R;
+import net.as93.treasurehunt.controllers.ViewHunt;
 import net.as93.treasurehunt.models.Leg;
+import net.as93.treasurehunt.models.Username;
+import net.as93.treasurehunt.utils.GetAllLocations;
+import net.as93.treasurehunt.utils.GetReachedLocations;
+import net.as93.treasurehunt.utils.IGetLocations;
 import net.as93.treasurehunt.utils.apiRequests.ControllerThatMakesARequest;
 import net.as93.treasurehunt.utils.apiRequests.GetReqFetchLegs;
 
 import java.util.ArrayList;
 import java.util.Random;
 
-public class ViewHuntLegsMapFragment extends Fragment implements ControllerThatMakesARequest{
+public class ViewHuntLegsMapFragment extends Fragment implements IGetLocations {
     /**
      * The fragment argument representing the section number for this
      * fragment.
@@ -69,9 +74,14 @@ public class ViewHuntLegsMapFragment extends Fragment implements ControllerThatM
 
         String huntName = getActivity().getIntent().getExtras().getString("huntname");
 
-        GetReqFetchLegs fetchAllLegs;
-        fetchAllLegs = new GetReqFetchLegs(this, huntName);
-        fetchAllLegs.execute();
+        new GetAllLocations(this, huntName);
+
+        if(((ViewHunt)getActivity()).isUserTheCreator()){
+            // User is the creator of the hunt? If so show all locations
+        }
+        else{ // The user did not create this hunt. Only show locations they have visited
+//            new GetReachedLocations(this, huntName, ((new Username(getActivity())).fetchUsername()));
+        }
 
          map = ((SupportMapFragment) getChildFragmentManager()
                  .findFragmentById(R.id.mapFragmentHuntMap)).getMap();
@@ -79,12 +89,7 @@ public class ViewHuntLegsMapFragment extends Fragment implements ControllerThatM
         return view;
     }
 
-    @Override
-    public void thereAreResults(Object results) {
 
-        putResultsOnTheMap(results);
-
-    }
 
 
     /**
@@ -163,5 +168,9 @@ public class ViewHuntLegsMapFragment extends Fragment implements ControllerThatM
         lblNumberOfMarkers.setText(newText);
     }
 
+    @Override
+    public void locationsReturned(Object results) {
+        putResultsOnTheMap(results);
+    }
 }
 
