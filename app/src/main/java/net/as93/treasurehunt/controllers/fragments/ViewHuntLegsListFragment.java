@@ -1,16 +1,21 @@
 package net.as93.treasurehunt.controllers.fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import net.as93.treasurehunt.MainActivity;
 import net.as93.treasurehunt.R;
 import net.as93.treasurehunt.controllers.ViewHunt;
+import net.as93.treasurehunt.controllers.dialogs.LocationDetailsDialog;
 import net.as93.treasurehunt.models.Leg;
 import net.as93.treasurehunt.models.Username;
 import net.as93.treasurehunt.utils.apiRequests.ControllerThatMakesARequest;
@@ -62,6 +67,24 @@ public class ViewHuntLegsListFragment extends Fragment implements ControllerThat
 
         // Call method that calls method that executes the fetch leg request method
         updateLegs();
+
+        // Add click listeners to each locaiton in hunt
+        itemsLst.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                DialogFragment locationDetails = LocationDetailsDialog.newInstance();
+                Bundle args = new Bundle();
+                args.putString("locationName", legs.get(position).getName());
+                args.putString("locationDescription", legs.get(position).getDescription());
+                args.putString("locationLat", legs.get(position).getLatitude());
+                args.putString("locationLng", legs.get(position).getLongitude());
+                args.putString("locationParent", huntName);
+                args.putString("locationPosition", legs.get(position).getPosition());
+                locationDetails.setArguments(args);
+
+                locationDetails.show(getFragmentManager (), "");
+            }
+        });
 
         return rootView;
     }
