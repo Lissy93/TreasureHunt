@@ -60,6 +60,11 @@ public class HuntSummaryFragment extends Fragment{
         btnAddLocation = (Button) rootView.findViewById(R.id.btnAddLocation);
         btnRegisterOnHunt = (Button) rootView.findViewById(R.id.btnRegisterOnHunt);
 
+        // Don't show the Add Location button if this user didn't create this hunt
+        if(!((ViewHunt) getActivity()).isUserTheCreator()){
+            btnAddLocation.setVisibility(View.GONE);
+        }
+
         // Show the add new leg screen when button is pressed
         btnAddLocation.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
