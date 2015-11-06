@@ -7,6 +7,7 @@ import android.view.InflateException;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdate;
@@ -143,13 +144,23 @@ public class ViewHuntLegsMapFragment extends Fragment implements ControllerThatM
                     .width(5)
                     .color(Color.RED));
             line.setGeodesic(true);
+            updateNumMarkerText("Displaying "+c+" locations");
         }
         else{
-            Toast.makeText(getActivity(),
-                    "There were no locations to display on the map for this hunt",
-                    Toast.LENGTH_LONG).show();
+            // There were no hunts :'(
+            updateNumMarkerText("There aren't yet any locations to display for this hunt");
         }
+    }
 
+    /**
+     * Updates the status text below the title
+     * To inform the user how many location markers will be displayed
+     * So that they don't think the app is broke when the map is empty...
+     * @param newText
+     */
+    private void updateNumMarkerText(String newText){
+        TextView lblNumberOfMarkers = (TextView) view.findViewById(R.id.lblNumberOfMarkers);
+        lblNumberOfMarkers.setText(newText);
     }
 
 }

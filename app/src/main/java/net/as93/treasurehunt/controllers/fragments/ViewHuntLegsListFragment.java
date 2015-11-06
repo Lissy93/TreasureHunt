@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import net.as93.treasurehunt.MainActivity;
@@ -18,14 +19,19 @@ import net.as93.treasurehunt.controllers.ViewHunt;
 import net.as93.treasurehunt.controllers.dialogs.LocationDetailsDialog;
 import net.as93.treasurehunt.models.Leg;
 import net.as93.treasurehunt.models.Username;
+import net.as93.treasurehunt.utils.IShowNumberOfLocations;
+import net.as93.treasurehunt.utils.NumberOfLocationsInHunt;
 import net.as93.treasurehunt.utils.apiRequests.ControllerThatMakesARequest;
 import net.as93.treasurehunt.utils.apiRequests.GetReqFetchLegs;
 import net.as93.treasurehunt.utils.apiRequests.GetReqReachedLocations;
 
+import org.w3c.dom.Text;
+
 import java.util.ArrayList;
 
 
-public class ViewHuntLegsListFragment extends Fragment implements ControllerThatMakesARequest{
+public class ViewHuntLegsListFragment extends Fragment
+        implements ControllerThatMakesARequest, IShowNumberOfLocations{
     /**
      * The fragment argument representing the section number for this
      * fragment.
@@ -35,6 +41,7 @@ public class ViewHuntLegsListFragment extends Fragment implements ControllerThat
     private String huntName;
     private ArrayList<Leg> legs = new ArrayList<>(); // List of location legs for adapter
     private ArrayAdapter<Leg> itemsAdapter; // List adapter
+    private TextView lblNumOfLegs;
 
     /**
      * Returns a new instance of this fragment for the given section
@@ -65,6 +72,8 @@ public class ViewHuntLegsListFragment extends Fragment implements ControllerThat
         itemsAdapter = new ArrayAdapter<Leg>(getActivity(), android.R.layout.simple_list_item_1, legs);
         itemsLst.setAdapter(itemsAdapter);
 
+        lblNumOfLegs = (TextView) rootView.findViewById(R.id.lblNumOfLegs);
+
         // Call method that calls method that executes the fetch leg request method
         updateLegs();
 
@@ -74,9 +83,11 @@ public class ViewHuntLegsListFragment extends Fragment implements ControllerThat
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 DialogFragment locationDetails = LocationDetailsDialog.newInstance();
                 locationDetails.setArguments(makeDialogBundle(position));
-                locationDetails.show(getFragmentManager (), "");
+                locationDetails.show(getFragmentManager(), "");
             }
         });
+
+        new NumberOfLocationsInHunt(this, huntName);
 
         return rootView;
     }
@@ -162,5 +173,10 @@ public class ViewHuntLegsListFragment extends Fragment implements ControllerThat
 //        showResultsMessage(formattedResults.size()); // Show message
         ((ViewHunt)getActivity()).setNumLocations(formattedResults.size());
 
+    }
+
+    @Override
+    public void numberOfLocationsReturned(int num) {
+        lblNumOfLegs.setText("Displaying "+legs.size()+ " out of "+num+" Locations");
     }
 }

@@ -12,10 +12,10 @@
     <ListView
         android:id="@+id/items_legs"
         android:layout_width="match_parent"
-        android:layout_height="400dp"
+        android:layout_height="390dp"
         android:layout_gravity="center_horizontal|bottom"
-        android:layout_alignParentStart="true"
-        android:layout_below="@+id/textView7">
+        android:layout_alignParentBottom="true"
+        android:layout_toEndOf="@+id/section_label">
     </ListView>
 
 
@@ -35,6 +35,14 @@
         android:text="Hunt Locations"
         android:id="@+id/textView7"
         android:layout_below="@+id/textView2"
+        android:layout_centerHorizontal="true"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:id="@+id/lblNumOfLegs"
+        android:layout_below="@+id/textView7"
         android:layout_centerHorizontal="true"/>
 
 

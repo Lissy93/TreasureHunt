@@ -107,7 +107,8 @@ public class HuntSummaryFragment extends Fragment{
             Toast.makeText(getActivity(),
                     "Successfully Registered on Hunt",
                     Toast.LENGTH_SHORT).show();
-            showAddNewLocationDialog();
+            changeButtonToContinue();
+            showNextClue();
         }
         else{
             Toast.makeText(getActivity(),
@@ -171,6 +172,7 @@ public class HuntSummaryFragment extends Fragment{
      * The same method gets called when the button is pressed still
      */
     private void changeButtonToContinue(){
+        playerRegistered = true;
         btnRegisterOnHunt.setText("Show Next Clue");
     }
 
