@@ -1,23 +1,16 @@
 package net.as93.treasurehunt.controllers.fragments;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.ListView;
 
 import net.as93.treasurehunt.R;
-import net.as93.treasurehunt.controllers.AddLocationActivity;
-import net.as93.treasurehunt.models.Hunt;
 import net.as93.treasurehunt.models.Leg;
-import net.as93.treasurehunt.models.Username;
 import net.as93.treasurehunt.utils.apiRequests.ControllerThatMakesARequest;
-import net.as93.treasurehunt.utils.apiRequests.GetReqFetchHunts;
 import net.as93.treasurehunt.utils.apiRequests.GetReqFetchLegs;
 
 import java.util.ArrayList;
@@ -57,16 +50,6 @@ public class ViewHuntLegsListFragment extends Fragment implements ControllerThat
         // Fetch the hunt name from intent bundle
         huntName = getActivity().getIntent().getExtras().getString("huntname");
 
-        // Show the add new leg screen when button is pressed
-        Button btnAddLocation = (Button) rootView.findViewById(R.id.btnAddLocation);
-        btnAddLocation.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), AddLocationActivity.class);
-                intent.putExtra("huntname", huntName);
-                intent.putExtra("leg", 1);
-                startActivity(intent);
-            }
-        });
 
         // Create the list ready for putting legs in it
         final ListView itemsLst = (ListView) rootView.findViewById(R.id.items_legs);

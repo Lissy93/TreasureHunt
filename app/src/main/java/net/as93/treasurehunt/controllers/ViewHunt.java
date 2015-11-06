@@ -4,25 +4,17 @@ import java.util.Locale;
 
 import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.app.ActionBar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
-import android.view.Gravity;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.TextView;
 
-import net.as93.treasurehunt.MainActivity;
 import net.as93.treasurehunt.R;
 import net.as93.treasurehunt.controllers.dialogs.SetUsernameDialog;
+import net.as93.treasurehunt.controllers.fragments.HuntSummaryFragment;
 import net.as93.treasurehunt.controllers.fragments.ViewHuntLegsListFragment;
 import net.as93.treasurehunt.controllers.fragments.ViewHuntLegsMapFragment;
 
@@ -84,11 +76,13 @@ public class ViewHunt extends AppCompatActivity {
             // getItem is called to instantiate the fragment for the given page.
             // Return a PlaceholderFragment
             switch(position){
-                case 0: return  ViewHuntLegsListFragment.newInstance(position + 1);
+                case 0: return  HuntSummaryFragment.newInstance(position + 1);
 
-                case 1: return  ViewHuntLegsMapFragment.newInstance(position + 1);
+                case 1: return  ViewHuntLegsListFragment.newInstance(position + 1);
 
-                default: return  ViewHuntLegsListFragment.newInstance(position + 1);
+                case 2: return  ViewHuntLegsMapFragment.newInstance(position + 1);
+
+                default: return  HuntSummaryFragment.newInstance(position + 1);
             }
         }
 

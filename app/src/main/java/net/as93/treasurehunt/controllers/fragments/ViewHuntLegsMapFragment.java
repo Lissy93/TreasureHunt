@@ -1,34 +1,29 @@
 package net.as93.treasurehunt.controllers.fragments;
 
-        import android.graphics.Color;
-        import android.os.Bundle;
-        import android.support.v4.app.Fragment;
-        import android.view.LayoutInflater;
-        import android.view.View;
-        import android.view.ViewGroup;
-        import android.widget.ListView;
+import android.graphics.Color;
+import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.view.InflateException;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 
-        import com.google.android.gms.maps.CameraUpdate;
-        import com.google.android.gms.maps.CameraUpdateFactory;
-        import com.google.android.gms.maps.GoogleMap;
-        import com.google.android.gms.maps.SupportMapFragment;
-        import com.google.android.gms.maps.model.LatLng;
-        import com.google.android.gms.maps.model.LatLngBounds;
-        import com.google.android.gms.maps.model.Marker;
-        import com.google.android.gms.maps.model.MarkerOptions;
-        import com.google.android.gms.maps.model.Polyline;
-        import com.google.android.gms.maps.model.PolylineOptions;
+import com.google.android.gms.maps.CameraUpdate;
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.LatLngBounds;
+import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.maps.model.Polyline;
+import com.google.android.gms.maps.model.PolylineOptions;
 
-        import net.as93.treasurehunt.R;
-        import net.as93.treasurehunt.models.Leg;
-        import net.as93.treasurehunt.utils.apiRequests.ControllerThatMakesARequest;
-        import net.as93.treasurehunt.utils.apiRequests.GetReqFetchLegs;
+import net.as93.treasurehunt.R;
+import net.as93.treasurehunt.models.Leg;
+import net.as93.treasurehunt.utils.apiRequests.ControllerThatMakesARequest;
+import net.as93.treasurehunt.utils.apiRequests.GetReqFetchLegs;
 
-        import java.util.ArrayList;
-
-/**
- * Created by Alicia on 15/10/2015.
- */
+import java.util.ArrayList;
 
 public class ViewHuntLegsMapFragment extends Fragment implements ControllerThatMakesARequest{
     /**
@@ -36,8 +31,8 @@ public class ViewHuntLegsMapFragment extends Fragment implements ControllerThatM
      * fragment.
      */
     private static final String ARG_SECTION_NUMBER = "section_number";
-    private String huntName;
     private GoogleMap map;
+    private static View view;
 
     /**
      * Returns a new instance of this fragment for the given section
@@ -57,18 +52,28 @@ public class ViewHuntLegsMapFragment extends Fragment implements ControllerThatM
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_view_hunt_map, container, false);
 
-        huntName = getActivity().getIntent().getExtras().getString("huntname");
+        if (view != null) {
+            ViewGroup parent = (ViewGroup) view.getParent();
+            if (parent != null)
+                parent.removeView(view);
+        }
+        try {
+            view = inflater.inflate(R.layout.fragment_view_hunt_map, container, false);
+        } catch (InflateException e) {
+        /* map is already there, just return view as it is */
+        }
+
+        String huntName = getActivity().getIntent().getExtras().getString("huntname");
 
         GetReqFetchLegs fetchAllLegs;
         fetchAllLegs = new GetReqFetchLegs(this, huntName);
         fetchAllLegs.execute();
 
          map = ((SupportMapFragment) getChildFragmentManager()
-                 .findFragmentById(R.id.mapFragmentHunt)).getMap();
+                 .findFragmentById(R.id.mapFragmentHuntMap)).getMap();
 
-        return rootView;
+        return view;
     }
 
     @Override
