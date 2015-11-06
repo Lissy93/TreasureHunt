@@ -21,6 +21,7 @@ import net.as93.treasurehunt.controllers.fragments.ViewHuntLegsMapFragment;
 public class ViewHunt extends AppCompatActivity {
 
     SectionsPagerAdapter mSectionsPagerAdapter;
+    int numLocations = 0;
 
     /**
      * The {@link ViewPager} that will host the section contents.
@@ -107,4 +108,11 @@ public class ViewHunt extends AppCompatActivity {
         }
     }
 
+    public int getNumLocations() {
+        return numLocations;
+    }
+
+    public void setNumLocations(int numLocations) {
+        this.numLocations = numLocations;
+    }
 }

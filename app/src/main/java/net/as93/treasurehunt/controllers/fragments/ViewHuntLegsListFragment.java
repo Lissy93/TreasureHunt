@@ -7,8 +7,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import net.as93.treasurehunt.R;
+import net.as93.treasurehunt.controllers.ViewHunt;
 import net.as93.treasurehunt.models.Leg;
 import net.as93.treasurehunt.utils.apiRequests.ControllerThatMakesARequest;
 import net.as93.treasurehunt.utils.apiRequests.GetReqFetchLegs;
@@ -75,6 +77,18 @@ public class ViewHuntLegsListFragment extends Fragment implements ControllerThat
 
 
     /**
+     * Shows a message depending on how many locations were found for given hunt
+     * @param size
+     */
+    private void showResultsMessage(int size){
+        String message;
+        if(size == 0){ message = "No locations found for this hunt"; }
+        else{ message = size + " locations found for this hunt";  }
+        Toast.makeText(getActivity(), message, Toast.LENGTH_LONG).show();
+    }
+
+
+    /**
      * This method is called after results are returned from the async
      * @param results and ArrayList of Leg objects
      */
@@ -84,5 +98,8 @@ public class ViewHuntLegsListFragment extends Fragment implements ControllerThat
         legs.clear();
         legs.addAll(formattedResults);
         itemsAdapter.notifyDataSetChanged();
+        showResultsMessage(formattedResults.size()); // Show message
+        ((ViewHunt)getActivity()).setNumLocations(formattedResults.size());
+
     }
 }

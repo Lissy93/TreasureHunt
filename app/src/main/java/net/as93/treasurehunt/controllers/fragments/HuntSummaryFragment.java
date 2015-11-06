@@ -11,6 +11,7 @@ import android.widget.Button;
 
 import net.as93.treasurehunt.R;
 import net.as93.treasurehunt.controllers.AddLocationActivity;
+import net.as93.treasurehunt.controllers.ViewHunt;
 
 
 public class HuntSummaryFragment extends Fragment {
@@ -53,12 +54,10 @@ public class HuntSummaryFragment extends Fragment {
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), AddLocationActivity.class);
                 intent.putExtra("huntname", huntName);
-                intent.putExtra("leg", 1);
+                intent.putExtra("leg", ((ViewHunt)getActivity()).getNumLocations()+1);
                 startActivity(intent);
             }
         });
-
-
 
         return rootView;
     }
