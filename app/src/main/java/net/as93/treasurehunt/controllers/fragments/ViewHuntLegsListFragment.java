@@ -68,7 +68,7 @@ public class ViewHuntLegsListFragment extends Fragment implements ControllerThat
         // Call method that calls method that executes the fetch leg request method
         updateLegs();
 
-        // Add click listeners to each locaiton in hunt
+        // Add click listeners to each location in hunt
         itemsLst.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
