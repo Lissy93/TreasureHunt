@@ -22,6 +22,8 @@ public class ViewHunt extends AppCompatActivity {
 
     SectionsPagerAdapter mSectionsPagerAdapter;
     int numLocations = 0;
+    String huntName;
+    String creator;
 
     /**
      * The {@link ViewPager} that will host the section contents.
@@ -39,6 +41,9 @@ public class ViewHunt extends AppCompatActivity {
         // Set up the ViewPager with the sections adapter.
         mViewPager = (ViewPager) findViewById(R.id.pager);
         mViewPager.setAdapter(mSectionsPagerAdapter);
+
+        huntName = getIntent().getExtras().getString("huntname");
+        creator = getIntent().getExtras().getString("creator");
 
     }
 
@@ -114,5 +119,13 @@ public class ViewHunt extends AppCompatActivity {
 
     public void setNumLocations(int numLocations) {
         this.numLocations = numLocations;
+    }
+
+    public String getHuntName() {
+        return huntName;
+    }
+
+    public String getCreator() {
+        return creator;
     }
 }

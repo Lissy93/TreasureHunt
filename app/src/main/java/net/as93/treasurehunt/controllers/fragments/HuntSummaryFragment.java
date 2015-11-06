@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.TextView;
 
 import net.as93.treasurehunt.R;
 import net.as93.treasurehunt.controllers.AddLocationActivity;
@@ -36,9 +37,8 @@ public class HuntSummaryFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-
         // Fetch the hunt name from intent bundle
-        huntName = getActivity().getIntent().getExtras().getString("huntname");
+        huntName = ((ViewHunt)getActivity()).getHuntName();
 
     }
 
@@ -47,6 +47,13 @@ public class HuntSummaryFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View rootView = inflater.inflate(R.layout.fragment_hunt_sumary, container, false);
+
+        // Set values for labels
+        TextView lblHuntTitle = (TextView) rootView.findViewById(R.id.lblHuntName);
+        lblHuntTitle.setText(huntName);
+
+        TextView lblCreatedBy = (TextView) rootView.findViewById(R.id.lblCreatedBy);
+        lblCreatedBy.setText("Created by "+ ((ViewHunt)getActivity()).getCreator());
 
         // Show the add new leg screen when button is pressed
         Button btnAddLocation = (Button) rootView.findViewById(R.id.btnAddLocation);

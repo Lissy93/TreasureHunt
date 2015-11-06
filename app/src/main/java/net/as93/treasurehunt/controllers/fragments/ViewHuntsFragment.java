@@ -66,6 +66,7 @@ public class ViewHuntsFragment extends Fragment
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent = new Intent(getActivity(), ViewHunt.class);
                 intent.putExtra("huntname", itemsAdapter.getItem(position).getTitle());
+                intent.putExtra("creator", itemsAdapter.getItem(position).getCreator());
                 startActivity(intent);
             }
         });
