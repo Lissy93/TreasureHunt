@@ -43,6 +43,7 @@ public class ViewHunt extends AppCompatActivity {
         mViewPager = (ViewPager) findViewById(R.id.pager);
         mViewPager.setAdapter(mSectionsPagerAdapter);
 
+        // Get the huntname and the creator from bundle
         huntName = getIntent().getExtras().getString("huntname");
         creator = getIntent().getExtras().getString("creator");
 
@@ -51,23 +52,17 @@ public class ViewHunt extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar.
         getMenuInflater().inflate(R.menu.menu_view_hunt, menu);
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+        if (item.getItemId() == R.id.action_settings) {
             DialogFragment setUsernameDialog = SetUsernameDialog.newInstance(
                     ViewHunt.this, "");
             setUsernameDialog.show(getSupportFragmentManager(), "");
         }
-
         return super.onOptionsItemSelected(item);
     }
 
@@ -80,8 +75,6 @@ public class ViewHunt extends AppCompatActivity {
 
         @Override
         public Fragment getItem(int position) {
-            // getItem is called to instantiate the fragment for the given page.
-            // Return a PlaceholderFragment
             switch(position){
                 case 0: return  HuntSummaryFragment.newInstance(position + 1);
 
@@ -95,8 +88,7 @@ public class ViewHunt extends AppCompatActivity {
 
         @Override
         public int getCount() {
-            // Show 3 total pages.
-            return 3;
+            return 3; // How many pages to display in slide view
         }
 
         @Override

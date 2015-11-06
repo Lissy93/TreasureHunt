@@ -12,8 +12,10 @@ import android.widget.Toast;
 import net.as93.treasurehunt.R;
 import net.as93.treasurehunt.controllers.ViewHunt;
 import net.as93.treasurehunt.models.Leg;
+import net.as93.treasurehunt.models.Username;
 import net.as93.treasurehunt.utils.apiRequests.ControllerThatMakesARequest;
 import net.as93.treasurehunt.utils.apiRequests.GetReqFetchLegs;
+import net.as93.treasurehunt.utils.apiRequests.GetReqReachedLocations;
 
 import java.util.ArrayList;
 
@@ -70,9 +72,18 @@ public class ViewHuntLegsListFragment extends Fragment implements ControllerThat
      * Call the fetch legs request and sets result to adapter to display
      */
     private void updateLegs(){
-        GetReqFetchLegs fetchAllLegs;
-        fetchAllLegs = new GetReqFetchLegs(this, huntName);
-        fetchAllLegs.execute();
+        if(((ViewHunt)getActivity()).isUserTheCreator()){
+            // User is the creator of the hunt? If so show all locations
+            GetReqFetchLegs fetchAllLegs;
+            fetchAllLegs = new GetReqFetchLegs(this, huntName);
+            fetchAllLegs.execute();
+        }
+        else{ // The user did not create this hunt. Only show locations they have visited
+            GetReqReachedLocations reachedLocationsReq =
+                    new GetReqReachedLocations(this, huntName, (new Username(getActivity())).fetchUsername());
+            reachedLocationsReq.execute();
+        }
+
     }
 
 
