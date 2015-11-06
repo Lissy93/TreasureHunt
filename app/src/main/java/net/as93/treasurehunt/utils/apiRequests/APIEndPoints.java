@@ -45,4 +45,15 @@ public class APIEndPoints {
         return BASE_URL+"/locations/"+huntName;
     }
 
+
+    /**
+     * Forms URL String for fetch all legs for given hunt end point
+     * @return String URL
+     */
+    protected final String getUrlForRegisteringPlayer(){
+        return BASE_URL+"/starthunt";
+    }
+
+
+
 }
