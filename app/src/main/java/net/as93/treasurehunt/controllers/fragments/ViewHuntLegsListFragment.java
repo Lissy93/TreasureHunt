@@ -73,15 +73,7 @@ public class ViewHuntLegsListFragment extends Fragment implements ControllerThat
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 DialogFragment locationDetails = LocationDetailsDialog.newInstance();
-                Bundle args = new Bundle();
-                args.putString("locationName", legs.get(position).getName());
-                args.putString("locationDescription", legs.get(position).getDescription());
-                args.putString("locationLat", legs.get(position).getLatitude());
-                args.putString("locationLng", legs.get(position).getLongitude());
-                args.putString("locationParent", huntName);
-                args.putString("locationPosition", legs.get(position).getPosition());
-                locationDetails.setArguments(args);
-
+                locationDetails.setArguments(makeDialogBundle(position));
                 locationDetails.show(getFragmentManager (), "");
             }
         });
@@ -111,6 +103,41 @@ public class ViewHuntLegsListFragment extends Fragment implements ControllerThat
 
 
     /**
+     * Makes the Bundle of arguments to pass to the dialog that displays
+     * Location details.
+     * @param position int the position in the legs list
+     * @return Bundle populated and ready to go
+     */
+    private Bundle makeDialogBundle(int position){
+        Bundle args = new Bundle();
+        args.putString("locationName", legs.get(position).getName());
+        args.putString("locationDescription", legs.get(position).getDescription());
+        args.putString("locationLat", legs.get(position).getLatitude());
+        args.putString("locationLng", legs.get(position).getLongitude());
+        args.putString("locationParent", huntName);
+        args.putString("locationPosition", legs.get(position).getPosition());
+        args.putBoolean("isLastLeg", isLastLeg(position));
+        if(!isLastLeg(position)){
+            args.putString("locationQuestion", legs.get(position).getQuestion());
+            args.putString("locationClue", legs.get(position).getClue());
+            args.putString("locationAnswer", legs.get(position).getAnswer());
+        }
+        return args;
+    }
+
+
+    /**
+     * Returns true if the position number indicates that this is the last
+     * location leg in this hunt
+     * @param position int the index in legs array
+     * @return Boolean true if last element
+     */
+    private boolean isLastLeg(int position){
+        return legs.size() == position + 1;
+    }
+
+
+    /**
      * Shows a message depending on how many locations were found for given hunt
      * @param size
      */
@@ -132,7 +159,7 @@ public class ViewHuntLegsListFragment extends Fragment implements ControllerThat
         legs.clear();
         legs.addAll(formattedResults);
         itemsAdapter.notifyDataSetChanged();
-        showResultsMessage(formattedResults.size()); // Show message
+//        showResultsMessage(formattedResults.size()); // Show message
         ((ViewHunt)getActivity()).setNumLocations(formattedResults.size());
 
     }

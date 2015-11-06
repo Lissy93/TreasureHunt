@@ -38,6 +38,15 @@ public class APIEndPoints {
 
 
     /**
+     * Forms URL String for fetch all hunts end point
+     * @return String URL
+     */
+    protected final String getUrlForFetchingPlayersOnHunt(String huntName){
+        return BASE_URL+"/players/"+huntName;
+    }
+
+
+    /**
      * Forms URL String for fetch all legs for given hunt end point
      * @return String URL
      */

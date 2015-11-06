@@ -14,16 +14,21 @@ import net.as93.treasurehunt.R;
 import net.as93.treasurehunt.controllers.AddLocationActivity;
 import net.as93.treasurehunt.controllers.ViewHunt;
 import net.as93.treasurehunt.models.Username;
+import net.as93.treasurehunt.utils.FetchRegisteredUsers;
+import net.as93.treasurehunt.utils.RegisterUserOnHunt;
 import net.as93.treasurehunt.utils.apiRequests.ControllerThatMakesARequest;
 import net.as93.treasurehunt.utils.apiRequests.PostReqRegisterPlayer;
 
+import java.util.ArrayList;
 
-public class HuntSummaryFragment extends Fragment implements ControllerThatMakesARequest {
+
+public class HuntSummaryFragment extends Fragment{
 
     private String huntName;
+    private String username;
+    private boolean playerRegistered = false;
     private static final String ARG_SECTION_NUMBER = "section_number";
-    private ControllerThatMakesARequest dis = this;
-
+    private Button btnRegisterOnHunt;
 
     public static HuntSummaryFragment newInstance(int sectionNumber) {
         HuntSummaryFragment fragment = new HuntSummaryFragment();
@@ -43,6 +48,8 @@ public class HuntSummaryFragment extends Fragment implements ControllerThatMakes
 
         // Fetch the hunt name from intent bundle
         huntName = ((ViewHunt) getActivity()).getHuntName();
+
+        this.username = (new Username(getActivity()).fetchUsername());
 
     }
 
@@ -70,29 +77,78 @@ public class HuntSummaryFragment extends Fragment implements ControllerThatMakes
             }
         });
 
-        Button btnRegisterOnHunt = (Button) rootView.findViewById(R.id.btnRegisterOnHunt);
+        btnRegisterOnHunt = (Button) rootView.findViewById(R.id.btnRegisterOnHunt);
         btnRegisterOnHunt.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                String huntName = ((ViewHunt) getActivity()).getHuntName();
-                String username = (new Username(getActivity()).fetchUsername());
-                PostReqRegisterPlayer registerPlayerRequest = new PostReqRegisterPlayer(username, huntName, dis);
-                registerPlayerRequest.execute();
+                if(playerRegistered){
+                    showNextClue();
+                }
+                else{
+                    registerPlayerOnHunt();
+                }
             }
         });
+
+        checkIfPlayerRegisteredOnHunt();
 
         return rootView;
     }
 
-    @Override
-    public void thereAreResults(Object results) {
-        String formatedResult = (String) results;
-        if (formatedResult.equals("200")) {
+
+    private void registerPlayerOnHunt(){
+        String huntName = ((ViewHunt) getActivity()).getHuntName();
+        new RegisterUserOnHunt(username, huntName, this);
+    }
+
+    public void userRegisterRequestComplete(String results){
+        if (results.equals("200")) {
             Toast.makeText(getActivity(), "Successfully Registered on Hunt", Toast.LENGTH_SHORT).show();
         }
         else{
             Toast.makeText(getActivity(), "Error, you may already be registered on this hunt", Toast.LENGTH_SHORT).show();
 
         }
+    }
+
+
+    protected void checkIfPlayerRegisteredOnHunt(){
+        new FetchRegisteredUsers(huntName, this);
+    }
+
+
+    /**
+     *
+     * @param results
+     */
+    public void updatePlayerRegistered(Object results){
+        ArrayList<String> formattedResults = (ArrayList<String>)results;
+        if(isPlayerRegistered(formattedResults)){
+            changeButtonToContinue();
+        }
+    }
+
+
+    /**
+     * Determines if a user is registered on a hunt or not
+     * @param results the results returned from the webservice
+     * @return boolean, true if they are registered
+     */
+    protected boolean isPlayerRegistered(ArrayList<String> results) {
+        for (String player : results) {
+            if (player.equals(username)) {
+                playerRegistered = true;
+            }
+        }
+        return playerRegistered;
+    }
+
+
+    private void showNextClue(){
+
+    }
+
+    private void changeButtonToContinue(){
+        btnRegisterOnHunt.setText("Show Next Clue");
     }
 
 }

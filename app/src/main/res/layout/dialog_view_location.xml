@@ -21,7 +21,8 @@
         android:id="@+id/dlgSummary"
         android:layout_below="@+id/dlgDescription"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="35dp"/>
+        android:layout_marginTop="9dp"
+        android:textSize="15sp"/>
 
     <TextView
         android:layout_width="wrap_content"
@@ -31,5 +32,56 @@
         android:id="@+id/dlgLocation"
         android:layout_below="@+id/dlgSummary"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="35dp"/>
+        android:layout_marginTop="15dp"
+        android:textSize="15sp"/>
+
+
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="1dip"
+        android:background="@color/blue"
+        android:id="@+id/horizontalLine"
+        android:layout_below="@+id/dlgLocation"
+        android:layout_marginTop="25dp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Next Question: "
+        android:id="@+id/dlgNextQuestion"
+        android:layout_marginTop="25dp"
+        android:layout_below="@+id/horizontalLine"
+        android:layout_centerHorizontal="true"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Clue: xxx XX Xxxxx XX  XXX X XXX XXXX xxxxx X"
+        android:id="@+id/dlgClue"
+        android:layout_below="@+id/dlgNextQuestion"
+        android:layout_centerHorizontal="true"
+        android:textSize="15sp"
+        android:layout_marginTop="10dp"/>
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/dlgAnswer"
+        android:layout_below="@+id/dlgClue"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:hint="Answer"/>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Submit Answer"
+        android:id="@+id/btnSubmitAnswer"
+        android:layout_marginTop="20dp"
+        android:layout_below="@+id/dlgAnswer"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:background="@color/colorAccent"/>
 </RelativeLayout>
