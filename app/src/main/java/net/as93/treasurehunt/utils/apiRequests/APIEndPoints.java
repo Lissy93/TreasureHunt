@@ -20,6 +20,15 @@ public class APIEndPoints {
 
 
     /**
+     * Forms URL String for save hunts end point
+     * @return String URL
+     */
+    protected final String getUrlForReachLocation(){
+        return BASE_URL+"/reachlocation";
+    }
+
+
+    /**
      * Forms URL String for save location or leg to a hunt
      * @return String URL
      */

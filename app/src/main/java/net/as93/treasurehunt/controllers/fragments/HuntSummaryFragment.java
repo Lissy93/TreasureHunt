@@ -34,6 +34,7 @@ public class HuntSummaryFragment extends Fragment implements IGetLocations, IGet
     private String username;
     private boolean playerRegistered = false;
     private ArrayList<Leg> locations = null;
+    private boolean huntComplete = false;
 
     // Buttons
     private Button btnRegisterOnHunt;
@@ -227,7 +228,7 @@ public class HuntSummaryFragment extends Fragment implements IGetLocations, IGet
         args.putString("locationLng", leg.getLongitude());
         args.putString("locationParent", huntName);
         args.putString("locationPosition", leg.getPosition());
-        args.putBoolean("isLastLeg", false);
+        args.putBoolean("isLastLeg", huntComplete);
             args.putString("locationQuestion", leg.getQuestion());
             args.putString("locationClue", leg.getClue());
             args.putString("locationAnswer", leg.getAnswer());
@@ -241,6 +242,12 @@ public class HuntSummaryFragment extends Fragment implements IGetLocations, IGet
 
     @Override
     public void stringsReturned(ArrayList<String> results) {
+
+        if(results.size()==locations.size()) {
+            huntComplete = true;
+            btnRegisterOnHunt.setText("Hunt Complete!");
+        }
+
         if(locations.size()>0) {
             Leg legToReturn = locations.get(locations.size() - 1);
             for (Leg leg : locations) {
