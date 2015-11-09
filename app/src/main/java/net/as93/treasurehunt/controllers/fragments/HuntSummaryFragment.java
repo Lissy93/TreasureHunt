@@ -150,10 +150,12 @@ public class HuntSummaryFragment extends Fragment implements IGetLocations, IGet
      * to become a show next clue button
      * @param results String ArrayList of users registered on hunt
      */
-    public void updatePlayerRegistered(Object results){
-        ArrayList<String> formattedResults = ((ArrayList<ArrayList<String>>)results).get(0);
-        if(isPlayerRegistered(formattedResults)){
-            changeButtonToContinue();
+    public void updatePlayerRegistered(Object results) {
+        if (((ArrayList<String>) results).size() != 0) {
+            ArrayList<String> formattedResults = ((ArrayList<ArrayList<String>>) results).get(0);
+            if (isPlayerRegistered(formattedResults)) {
+                changeButtonToContinue();
+            }
         }
     }
 
@@ -165,7 +167,7 @@ public class HuntSummaryFragment extends Fragment implements IGetLocations, IGet
      */
     protected boolean isPlayerRegistered(ArrayList<String> results) {
         for (String player : results) {
-            if (player.equals(username)) {
+            if (player!=null && player.equals(username)) {
                 playerRegistered = true;
                 break;
             }
