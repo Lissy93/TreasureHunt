@@ -1,8 +1,7 @@
-package net.as93.treasurehunt.utils;
+package net.as93.treasurehunt.utils.calls;
 
 import net.as93.treasurehunt.utils.apiRequests.ControllerThatMakesARequest;
 import net.as93.treasurehunt.utils.apiRequests.GetReqFetchLegs;
-import net.as93.treasurehunt.utils.apiRequests.GetReqReachedLocations;
 
 public class GetAllLocations implements ControllerThatMakesARequest {
 

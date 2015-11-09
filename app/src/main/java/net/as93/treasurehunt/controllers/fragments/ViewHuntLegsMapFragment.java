@@ -8,7 +8,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -23,12 +22,8 @@ import com.google.android.gms.maps.model.PolylineOptions;
 import net.as93.treasurehunt.R;
 import net.as93.treasurehunt.controllers.ViewHunt;
 import net.as93.treasurehunt.models.Leg;
-import net.as93.treasurehunt.models.Username;
-import net.as93.treasurehunt.utils.GetAllLocations;
-import net.as93.treasurehunt.utils.GetReachedLocations;
-import net.as93.treasurehunt.utils.IGetLocations;
-import net.as93.treasurehunt.utils.apiRequests.ControllerThatMakesARequest;
-import net.as93.treasurehunt.utils.apiRequests.GetReqFetchLegs;
+import net.as93.treasurehunt.utils.calls.GetAllLocations;
+import net.as93.treasurehunt.utils.calls.IGetLocations;
 
 import java.util.ArrayList;
 import java.util.Random;

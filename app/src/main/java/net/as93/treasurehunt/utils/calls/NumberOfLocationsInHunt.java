@@ -1,4 +1,4 @@
-package net.as93.treasurehunt.utils;
+package net.as93.treasurehunt.utils.calls;
 
 import net.as93.treasurehunt.models.Leg;
 import net.as93.treasurehunt.utils.apiRequests.ControllerThatMakesARequest;

@@ -16,13 +16,10 @@ import net.as93.treasurehunt.R;
 import net.as93.treasurehunt.controllers.ViewHunt;
 import net.as93.treasurehunt.controllers.dialogs.LocationDetailsDialog;
 import net.as93.treasurehunt.models.Leg;
-import net.as93.treasurehunt.models.Username;
-import net.as93.treasurehunt.utils.GetAllLocations;
-import net.as93.treasurehunt.utils.GetReachedLocations;
-import net.as93.treasurehunt.utils.IGetLocations;
-import net.as93.treasurehunt.utils.IReturnResponseCode;
-import net.as93.treasurehunt.utils.IShowNumberOfLocations;
-import net.as93.treasurehunt.utils.NumberOfLocationsInHunt;
+import net.as93.treasurehunt.utils.calls.GetAllLocations;
+import net.as93.treasurehunt.utils.calls.IGetLocations;
+import net.as93.treasurehunt.utils.calls.IShowNumberOfLocations;
+import net.as93.treasurehunt.utils.calls.NumberOfLocationsInHunt;
 
 import java.util.ArrayList;
 

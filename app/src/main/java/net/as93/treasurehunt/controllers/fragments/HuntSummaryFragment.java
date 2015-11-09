@@ -17,12 +17,12 @@ import net.as93.treasurehunt.controllers.ViewHunt;
 import net.as93.treasurehunt.controllers.dialogs.LocationDetailsDialog;
 import net.as93.treasurehunt.models.Leg;
 import net.as93.treasurehunt.models.Username;
-import net.as93.treasurehunt.utils.FetchRegisteredUsers;
-import net.as93.treasurehunt.utils.GetAllLocations;
-import net.as93.treasurehunt.utils.GetReachedLocations;
-import net.as93.treasurehunt.utils.IGetLocations;
-import net.as93.treasurehunt.utils.IGetStrings;
-import net.as93.treasurehunt.utils.RegisterUserOnHunt;
+import net.as93.treasurehunt.utils.calls.FetchRegisteredUsers;
+import net.as93.treasurehunt.utils.calls.GetAllLocations;
+import net.as93.treasurehunt.utils.calls.GetReachedLocations;
+import net.as93.treasurehunt.utils.calls.IGetLocations;
+import net.as93.treasurehunt.utils.calls.IGetStrings;
+import net.as93.treasurehunt.utils.calls.RegisterUserOnHunt;
 
 import java.util.ArrayList;
 
@@ -96,8 +96,6 @@ public class HuntSummaryFragment extends Fragment implements IGetLocations, IGet
 
         new GetAllLocations(this, huntName);
 
-        if(playerRegistered) new GetReachedLocations(this, huntName, username);
-
         return rootView;
     }
 
@@ -157,6 +155,10 @@ public class HuntSummaryFragment extends Fragment implements IGetLocations, IGet
                 changeButtonToContinue();
             }
         }
+
+        if(playerRegistered) new GetReachedLocations(this, huntName, username); // if they r then fetch locations
+
+
     }
 
 

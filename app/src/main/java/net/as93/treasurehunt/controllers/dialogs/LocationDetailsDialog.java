@@ -13,9 +13,8 @@ import android.widget.Toast;
 import net.as93.treasurehunt.R;
 import net.as93.treasurehunt.controllers.ViewHunt;
 import net.as93.treasurehunt.models.Username;
-import net.as93.treasurehunt.utils.IReturnResponseCode;
-import net.as93.treasurehunt.utils.RegisterUserOnHunt;
-import net.as93.treasurehunt.utils.SubmitReachLocation;
+import net.as93.treasurehunt.utils.calls.IReturnResponseCode;
+import net.as93.treasurehunt.utils.calls.SubmitReachLocation;
 
 import java.util.ArrayList;
 

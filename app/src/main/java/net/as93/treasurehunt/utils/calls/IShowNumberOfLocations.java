@@ -1,4 +1,4 @@
-package net.as93.treasurehunt.utils;
+package net.as93.treasurehunt.utils.calls;
 
 /**
  * Created by Alicia on 06/11/2015.
