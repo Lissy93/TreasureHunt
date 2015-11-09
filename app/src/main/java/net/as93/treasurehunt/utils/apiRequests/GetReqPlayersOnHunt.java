@@ -4,6 +4,8 @@ import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
 
 import java.io.IOException;
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 
 public class GetReqPlayersOnHunt extends GetRequest {
 
@@ -27,13 +29,16 @@ public class GetReqPlayersOnHunt extends GetRequest {
      * @throws IOException
      */
     @Override
-    protected String getItem(XmlPullParser parser) throws XmlPullParserException, IOException {
+    protected ArrayList<String> getItem(XmlPullParser parser) throws XmlPullParserException, IOException {
         String username = "???";
-        while (!isEndTag(parser, "users") && !isEndDoc(parser)) {
+        ArrayList<String> usernames = new ArrayList<>();
+        while (!isEndTag(parser, "user") && !isEndDoc(parser)) {
             username = getTagText(parser, "user");
+            usernames.add(username);
             parser.next();
         }
-        return username;
+        return usernames;
+
     }
 
 

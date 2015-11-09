@@ -20,6 +20,7 @@ import net.as93.treasurehunt.models.Username;
 import net.as93.treasurehunt.utils.GetAllLocations;
 import net.as93.treasurehunt.utils.GetReachedLocations;
 import net.as93.treasurehunt.utils.IGetLocations;
+import net.as93.treasurehunt.utils.IReturnResponseCode;
 import net.as93.treasurehunt.utils.IShowNumberOfLocations;
 import net.as93.treasurehunt.utils.NumberOfLocationsInHunt;
 
@@ -171,6 +172,13 @@ public class ViewHuntLegsListFragment extends Fragment
     @Override
     public void locationsReturned(Object results) {
         ArrayList<Leg> formattedResults = (ArrayList<Leg>)results;
+
+//        for(int i = 0; i< formattedResults.size(); i++){
+//            if(!isLocationConqured(formattedResults.get(i))){
+//                formattedResults.remove(i);
+//            }
+//        }
+
         legs.clear();
         legs.addAll(formattedResults);
         itemsAdapter.notifyDataSetChanged();
@@ -183,4 +191,24 @@ public class ViewHuntLegsListFragment extends Fragment
 
         }
     }
+
+
+    private boolean isLocationConqured(Leg location){
+        ArrayList<String> completedLocations;
+        try{
+            completedLocations = ((ViewHunt)getActivity()).getCompletedLocationNames();}
+        catch (Exception e){
+            completedLocations = new ArrayList<>();
+        }
+        if(completedLocations!=null) {
+            for (String doneLocation : completedLocations) {
+                if (location.getName().equals(doneLocation)) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+
 }

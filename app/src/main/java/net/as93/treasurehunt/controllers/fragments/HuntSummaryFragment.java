@@ -84,14 +84,19 @@ public class HuntSummaryFragment extends Fragment implements IGetLocations, IGet
         // Either register on hunt, or show next clue
         btnRegisterOnHunt.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                if(playerRegistered){ showNextClue(); }
-                else{ registerPlayerOnHunt(); }
+                if (playerRegistered) {
+                    showNextClue();
+                } else {
+                    registerPlayerOnHunt();
+                }
             }
         });
 
         checkIfPlayerRegisteredOnHunt();
 
         new GetAllLocations(this, huntName);
+
+        if(playerRegistered) new GetReachedLocations(this, huntName, username);
 
         return rootView;
     }
@@ -146,7 +151,7 @@ public class HuntSummaryFragment extends Fragment implements IGetLocations, IGet
      * @param results String ArrayList of users registered on hunt
      */
     public void updatePlayerRegistered(Object results){
-        ArrayList<String> formattedResults = (ArrayList<String>)results;
+        ArrayList<String> formattedResults = ((ArrayList<ArrayList<String>>)results).get(0);
         if(isPlayerRegistered(formattedResults)){
             changeButtonToContinue();
         }
@@ -162,6 +167,7 @@ public class HuntSummaryFragment extends Fragment implements IGetLocations, IGet
         for (String player : results) {
             if (player.equals(username)) {
                 playerRegistered = true;
+                break;
             }
         }
         return playerRegistered;
@@ -242,6 +248,8 @@ public class HuntSummaryFragment extends Fragment implements IGetLocations, IGet
 
     @Override
     public void stringsReturned(ArrayList<String> results) {
+
+        ((ViewHunt)getActivity()).setCompletedLocationNames(results);
 
         if(results.size()==locations.size()) {
             huntComplete = true;

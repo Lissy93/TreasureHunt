@@ -11,6 +11,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import net.as93.treasurehunt.R;
 import net.as93.treasurehunt.controllers.ViewHunt;
@@ -108,6 +109,10 @@ public class ViewHuntsFragment extends Fragment
         hunts.clear();
         hunts.addAll(formattedResults);
         itemsAdapter.notifyDataSetChanged();
+        if(typeOfHunt=='m' && formattedResults.size()<1){
+            Toast.makeText(getActivity(),
+                    "You haven't created any hunts yet", Toast.LENGTH_SHORT).show();
+        }
         }
 
 

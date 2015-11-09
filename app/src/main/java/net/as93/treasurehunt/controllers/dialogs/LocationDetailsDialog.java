@@ -17,6 +17,8 @@ import net.as93.treasurehunt.utils.IReturnResponseCode;
 import net.as93.treasurehunt.utils.RegisterUserOnHunt;
 import net.as93.treasurehunt.utils.SubmitReachLocation;
 
+import java.util.ArrayList;
+
 public class LocationDetailsDialog extends DialogFragment implements IReturnResponseCode{
 
     String ans;
@@ -82,6 +84,13 @@ public class LocationDetailsDialog extends DialogFragment implements IReturnResp
             tvNextQuestion.setTextColor(getResources().getColor(R.color.darkorange));
         }
 
+        // If location is complete then don't let the user resubmit it
+        if(isLocationComplete()){
+            etAnswer.setText(ans);
+            etAnswer.setEnabled(false);
+            btnSubmitAnswer.setEnabled(false);
+        }
+
         // Button listener on submit
         Button btnGuess = (Button)view.findViewById(R.id.btnSubmitAnswer);
         btnGuess.setOnClickListener(new View.OnClickListener() {
@@ -114,5 +123,23 @@ public class LocationDetailsDialog extends DialogFragment implements IReturnResp
         else{
             Toast.makeText(getActivity(), "Correct - Error Updating", Toast.LENGTH_SHORT).show();
         }
+    }
+
+
+    private boolean isLocationComplete(){
+        ArrayList<String> completedLocations;
+        try{
+            completedLocations = ((ViewHunt)getActivity()).getCompletedLocationNames();}
+        catch (Exception e){
+            completedLocations = new ArrayList<>();
+        }
+        if(completedLocations!=null) {
+            for (String doneLocation : completedLocations) {
+                if (dlgTitle.equals(doneLocation)) {
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 }

@@ -1,5 +1,6 @@
 package net.as93.treasurehunt.controllers;
 
+import java.util.ArrayList;
 import java.util.Locale;
 
 import android.support.v4.app.DialogFragment;
@@ -25,6 +26,7 @@ public class ViewHunt extends AppCompatActivity {
     int numLocations = 0;
     String huntName;
     String creator;
+    ArrayList<String> completedLocationNames;
 
     /**
      * The {@link ViewPager} that will host the section contents.
@@ -130,5 +132,13 @@ public class ViewHunt extends AppCompatActivity {
 
     public String getCreator() {
         return creator;
+    }
+
+    public ArrayList<String> getCompletedLocationNames() {
+        return completedLocationNames;
+    }
+
+    public void setCompletedLocationNames(ArrayList<String> completedLocationNames) {
+        this.completedLocationNames = completedLocationNames;
     }
 }
